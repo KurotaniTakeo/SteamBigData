@@ -1,0 +1,249 @@
+{% extends "base.html" %} {% block title %}用户登录{% endblock %} {% block body_attr %}
+
+{% endblock %}{% block
+welcome %}用户登录{% endblock %}{% block content %}
+
+<main id="main">
+      <!-- ======= Register Section ======= -->
+      <section id="account" class="account">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 d-flex align-items-stretch" data-aos="fade-up">
+              <div class="info-box-chosen">
+                <i class="icofont-contact-add"></i>
+                <h3>注册</h3>
+                <p>没有账号？点击注册即可创建新用户</p>
+              </div>
+            </div>
+
+            <div class="col-lg-6 d-flex align-items-stretch" data-aos="fade-up">
+              <a href="/login" class="info-box-link">
+                <div class="info-box">
+                  <i class="icofont-login"></i>
+                  <h3>登录</h3>
+                  <p>已经注册？点击登录立即体验完整功能</p>
+                </div>
+              </a>
+            </div>
+
+            <!-- 显示闪现消息 -->
+            <div class="col-lg-12 mx-auto">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %} {% for category, message in messages %}
+              <div
+                class="alert alert-{{ category }} alert-dismissible fade show"
+                role="alert"
+              >
+                {{ message }}
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="alert"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% endfor %} {% endif %} {% endwith %}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12" data-aos="fade-up" data-aos-delay="300">
+              <form
+                action="{{ url_for('register') }}"
+                method="post"
+                role="form"
+                class="info-form"
+              >
+                <!-- 邮箱 -->
+                <div class="form-row justify-content-center">
+                  <div class="col-lg-7 form-group">
+                    <input
+                      type="email"
+                      name="mail"
+                      class="form-control"
+                      id="mail"
+                      placeholder="请输入你的邮箱地址作为你的账号"
+                      required
+                    />
+                    <div class="validate"></div>
+                  </div>
+                </div>
+
+                <!-- 密码 -->
+                <div class="form-row justify-content-center">
+                  <div class="col-lg-7 form-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      name="password"
+                      id="password"
+                      placeholder="请输入你的密码"
+                      required
+                      minlength="6"
+                    />
+                    <div class="validate"></div>
+                  </div>
+                </div>
+
+                <!-- 用户名 -->
+                <div class="form-row justify-content-center">
+                  <div class="col-lg-7 form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="user_name"
+                      id="user_name"
+                      placeholder="请输入你的用户名"
+                      required
+                    />
+                    <div class="validate"></div>
+                  </div>
+                </div>
+
+                <!-- 偏好类别 -->
+                <div class="form-row justify-content-center">
+                  <div class="col-lg-7 form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="preference_category"
+                      id="preference_category"
+                      placeholder="请输入你的偏好类别"
+                    />
+                    <div class="validate"></div>
+                  </div>
+                </div>
+
+                <!-- 偏好价格 -->
+                <div class="form-row justify-content-center">
+                  <div class="col-lg-7 form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="preference_price"
+                      id="preference_price"
+                      placeholder="请输入你的偏好价格"
+                    />
+                    <div class="validate"></div>
+                  </div>
+                </div>
+
+                <!-- 年龄 -->
+                <div class="form-row justify-content-center">
+                  <div class="col-lg-7 form-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="age"
+                      id="age"
+                      placeholder="请输入你的年龄"
+                    />
+                    <div class="validate"></div>
+                  </div>
+                </div>
+
+                <!-- 性别 -->
+                <div class="form-row justify-content-center">
+                  <div class="col-lg-7 form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="gender"
+                      id="gender"
+                      placeholder="请输入你的性别"
+                    />
+                    <div class="validate"></div>
+                  </div>
+                </div>
+
+                <!-- 语言 -->
+                <div class="form-row justify-content-center">
+                  <div class="col-lg-7 form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="languages"
+                      id="languages"
+                      placeholder="请输入你使用的语言"
+                    />
+                    <div class="validate"></div>
+                  </div>
+                </div>
+
+                <!-- 平台 -->
+                <div class="form-row justify-content-center">
+                  <div class="col-lg-7 form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="platforms"
+                      id="platforms"
+                      placeholder="请输入你使用的平台"
+                    />
+                    <div class="validate"></div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">
+                    Your message has been sent. Thank you!
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <button type="submit">注册</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="section-title">
+            <br /><br />
+            <h5>登录后你可以...</h5>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 d-flex align-items-stretch" data-aos="fade-up">
+              <div class="info-box">
+                <i class="icofont-unlocked"></i>
+                <h3>FULL</h3>
+                <p>解锁并使用完整功能</p>
+              </div>
+            </div>
+
+            <div
+              class="col-lg-3 d-flex align-items-stretch"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              <div class="info-box">
+                <i class="icofont-database"></i>
+                <h3>SDP</h3>
+                <p>使用SDP进行可视化信息查询</p>
+              </div>
+            </div>
+
+            <div
+              class="col-lg-3 d-flex align-items-stretch"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <div class="info-box">
+                <i class="icofont-like"></i>
+                <h3>SRS</h3>
+                <p>使用SRS进行个性化推荐</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Contact Us Section -->
+    </main>
+    <!-- End #main -->
+
+
+{% endblock %}

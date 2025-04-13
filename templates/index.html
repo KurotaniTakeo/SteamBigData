@@ -1,0 +1,251 @@
+{% extends "base.html" %} {% block title %}首页 - SDRS{% endblock %} {% block body_attr %}
+
+{% endblock %}{% block
+welcome %}你好{% if user_name %}，{{ user_name }}{% endif %}{% endblock %}{% block content %}
+
+
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+  <div class="hero-container">
+    <div
+      id="heroCarousel"
+      class="carousel slide carousel-fade"
+      data-ride="carousel"
+    >
+      <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+      <div class="carousel-inner" role="listbox">
+        <!-- Slide 1 -->
+        <div
+          class="carousel-item active"
+          style="background-image: url('static/image/slide/slide-1.jpg')"
+        >
+          <div class="carousel-container">
+            <div class="carousel-content container">
+              <h2 class="animated fadeInDown">
+                欢迎来到 <span>我司官网</span>
+              </h2>
+              <p class="animated fadeInUp">
+                玩太刀玩的公司，是一家专注于发掘数据信息，探索数据背后的潜力，实现数据最大价值的，立足于信息技术的科技公司。
+              </p>
+              <a
+                href="#about"
+                class="btn-get-started animated fadeInUp scrollto"
+                >了解更多</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div
+          class="carousel-item"
+          style="background-image: url('static/image/slide/slide-2.jpg')"
+        >
+          <div class="carousel-container">
+            <div class="carousel-content container">
+              <h2 class="animated fadeInDown">Steam数据分析平台（SDP）</h2>
+              <p class="animated fadeInUp">
+                随着数字游戏市场的迅猛发展，Steam平台已成为全球最大的PC游戏分发平台之一，海量游戏数据蕴含巨大的商业价值。为帮助玩家高效发现优质游戏、辅助开发者洞察市场趋势，本项目拟通过采集Steam平台多维数据，构建可视化分析系统与智能推荐引擎，优化用户体验并提升平台商业价值。
+              </p>
+              <a
+                href="#services"
+                class="btn-get-started animated fadeInUp scrollto"
+                >了解更多</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div
+          class="carousel-item"
+          style="background-image: url('static/image/slide/slide-3.jpg')"
+        >
+          <div class="carousel-container">
+            <div class="carousel-content container">
+              <h2 class="animated fadeInDown">Steam游戏推荐系统（SRS）</h2>
+              <p class="animated fadeInUp">
+                一个基于海量Steam数据的游戏推荐系统，旨在为用户提供精准，有效，贴心的游戏内容推送，解决用户在寻找产品时信息渠道单一，主观，盲目等问题
+              </p>
+              <a
+                href="#portfolio"
+                class="btn-get-started animated fadeInUp scrollto"
+                >了解更多</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a
+        class="carousel-control-prev"
+        href="#heroCarousel"
+        role="button"
+        data-slide="prev"
+      >
+        <span
+          class="carousel-control-prev-icon icofont-rounded-left"
+          aria-hidden="true"
+        ></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#heroCarousel"
+        role="button"
+        data-slide="next"
+      >
+        <span
+          class="carousel-control-next-icon icofont-rounded-right"
+          aria-hidden="true"
+        ></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- End Hero -->
+<main id="main">
+     <!-- ======= About Us Section ======= -->
+      <section id="about" class="about">
+        <div class="container">
+          <div class="row no-gutters">
+            <div class="col-lg-6 video-box">
+              <img src="static/img/about.jpg" class="img-fluid" alt="" />
+              <a
+                href="https://www.youtube.com/watch?v=jDDaplaOz7Q"
+                class="venobox play-btn mb-4"
+                data-vbtype="video"
+                data-autoplay="true"
+              ></a>
+            </div>
+
+            <div
+              class="col-lg-6 d-flex flex-column justify-content-center about-content"
+            >
+              <div class="section-title">
+                <h2>关于我们</h2>
+                <p>
+                  玩太刀玩的公司，是一家专注于发掘数据信息，探索数据背后的潜力，实现数据最大价值的，立足于信息技术的科技公司。旗下拥有Steam数据分析平台（SDP）和Steam游戏推荐系统（SRS）两大和核心产品：SDP....肥肠牛笔，SRS也是...牛的一笔。
+                </p>
+              </div>
+
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                <div class="icon"><i class="icofont-database"></i></div>
+                <h4 class="title"><a href="/login">SDP</a></h4>
+                <p class="description">Steam数据分析平台，如你所见，肥肠牛笔</p>
+              </div>
+
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                <div class="icon"><i class="icofont-thumbs-up"></i></div>
+                <h4 class="title"><a href="">SRS</a></h4>
+                <p class="description">Steam游戏推荐系统，不用多说，牛的一笔</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End About Us Section -->
+
+
+
+<!-- ======= Our Team Section 团队部分======= -->
+<section id="team" class="team">
+  <div class="container">
+    <div class="section-title">
+      <h2>团队成员</h2>
+      <p>玩太刀玩的技术有限公司核心员工</p>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up">
+        <div class="member">
+          <div class="pic">
+            <img src="static/image/team/team-1.jpg" class="img-fluid" alt="" />
+          </div>
+          <div class="member-info">
+            <h4>Walter White</h4>
+            <span>Chief Executive Officer</span>
+            <div class="social">
+              <a href=""><i class="icofont-qq"></i></a>
+              <a href=""><i class="icofont-wechat"></i></a>
+              <a href=""><i class="icofont-weibo"></i></a>
+              <a href=""><i class="icofont-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="col-xl-3 col-lg-4 col-md-6"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        <div class="member">
+          <div class="pic">
+            <img src="static/image/team/team-2.jpg" class="img-fluid" alt="" />
+          </div>
+          <div class="member-info">
+            <h4>Sarah Jhonson</h4>
+            <span>Product Manager</span>
+            <div class="social">
+              <a href=""><i class="icofont-twitter"></i></a>
+              <a href=""><i class="icofont-facebook"></i></a>
+              <a href=""><i class="icofont-instagram"></i></a>
+              <a href=""><i class="icofont-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="col-xl-3 col-lg-4 col-md-6"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
+        <div class="member">
+          <div class="pic">
+            <img src="static/image/team/team-3.jpg" class="img-fluid" alt="" />
+          </div>
+          <div class="member-info">
+            <h4>William Anderson</h4>
+            <span>CTO</span>
+            <div class="social">
+              <a href=""><i class="icofont-twitter"></i></a>
+              <a href=""><i class="icofont-facebook"></i></a>
+              <a href=""><i class="icofont-instagram"></i></a>
+              <a href=""><i class="icofont-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="col-xl-3 col-lg-4 col-md-6"
+        data-aos="fade-up"
+        data-aos-delay="300"
+      >
+        <div class="member">
+          <div class="pic">
+            <img src="static/image/team/team-4.jpg" class="img-fluid" alt="" />
+          </div>
+          <div class="member-info">
+            <h4>Amanda Jepson</h4>
+            <span>Accountant</span>
+            <div class="social">
+              <a href=""><i class="icofont-twitter"></i></a>
+              <a href=""><i class="icofont-facebook"></i></a>
+              <a href=""><i class="icofont-instagram"></i></a>
+              <a href=""><i class="icofont-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Our Team Section -->
+</main>
+<!-- End Main -->
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends "base.html" %} {% block title %}用户登录{% endblock %} {% block body_attr %}
+data-delay-redirect="{{ 'true' if delay_redirect else 'false' }}"
+{% endblock %}{% block
+welcome %}用户登录{% endblock %}{% block content %}
+
+  <main id="main">
+      <!-- ======= Login Section ======= -->
+      <section id="account" class="account">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 d-flex align-items-stretch" data-aos="fade-up">
+              <a href="/register" class="info-box-link">
+                <div class="info-box">
+                  <i class="icofont-contact-add"></i>
+                  <h3>注册</h3>
+                  <p>没有账号？点击注册即可创建新用户</p>
+                </div>
+              </a>
+            </div>
+            <div class="col-lg-6 d-flex align-items-stretch" data-aos="fade-up">
+              <div class="info-box-chosen">
+                <i class="icofont-login"></i>
+                <h3>登录</h3>
+                <p>已经注册？点击登录立即体验完整功能</p>
+              </div>
+            </div>
+            <!-- 显示闪现消息 -->
+            <div class="col-lg-12 mx-auto">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %} {% for category, message in messages %}
+              <div
+                class="alert alert-{{ category }} alert-dismissible fade show"
+                role="alert"
+              >
+                {{ message }}
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="alert"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% endfor %} {% endif %} {% endwith %}
+            </div>
+            <div class="col-lg-12" data-aos="fade-up" data-aos-delay="300">
+              <form
+                action="{{ url_for('login') }}"
+                method="post"
+                role="form"
+                class="info-form"
+              >
+                <div class="form-row justify-content-center">
+                  <div class="col-lg-7 form-group">
+                    <input
+                      type="email"
+                      name="mail"
+                      class="form-control"
+                      id="mail"
+                      placeholder="请输入你的邮箱地址作为你的账号"
+                      required
+                    />
+                    <div class="validate"></div>
+                  </div>
+                </div>
+
+                <div class="form-row justify-content-center">
+                  <div class="col-lg-7 form-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      name="password"
+                      id="password"
+                      placeholder="请输入你的密码"
+                      required
+                      minlength="6"
+                    />
+                    <div class="validate"></div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">
+                    Your message has been sent. Thank you!
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit">登录</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="section-title">
+            <br /><br /><br /><br /><br /><br />
+            <h5>登录后你可以...</h5>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 d-flex align-items-stretch" data-aos="fade-up">
+              <div class="info-box">
+                <i class="icofont-unlocked"></i>
+                <h3>FULL</h3>
+                <p>解锁并使用完整功能</p>
+              </div>
+            </div>
+
+            <div
+              class="col-lg-3 d-flex align-items-stretch"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              <div class="info-box">
+                <i class="icofont-database"></i>
+                <h3>SDP</h3>
+                <p>使用SDP进行可视化信息查询</p>
+              </div>
+            </div>
+
+            <div
+              class="col-lg-3 d-flex align-items-stretch"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <div class="info-box">
+                <i class="icofont-like"></i>
+                <h3>SRS</h3>
+                <p>使用SRS进行个性化推荐</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Login Section -->
+    </main>
+    <!-- End #main -->
+
+
+{% endblock %}

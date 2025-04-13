@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>{% block title %}{% endblock %}</title>
+
+  <!-- SEO + meta （搜索引擎优化，社交媒体展示优化）-->
+  <meta name="description" content="一个用于分析 Steam 游戏数据并提供个性化推荐的系统。" />
+  <meta name="author" content="SDRS Project Team" />
+  <meta name="keywords" content="Steam, 游戏推荐, 数据分析, 推荐系统, 游戏排行" />
+  <meta property="og:title" content="SDRS——Steam数据分析和推荐系统" />
+  <meta property="og:description" content="一个用于分析 Steam 游戏数据并提供个性化推荐的系统。" />
+  <meta property="og:image" content="static/image/sdrs_logo.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicons 网站图标 -->
+  <link rel="icon" href="static/image/sdrs_logo.png" />
+
+  <!-- fonts 本地字体 -->
+  <link rel="stylesheet" href="static/css/fonts.css" />
+
+  <!-- Vendor CSS Files  第三方库CSS-->
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="static/vendor/icofont/icofont.min.css" rel="stylesheet" />
+    <link href="static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="static/vendor/animate.css/animate.min.css" rel="stylesheet" />
+    <link href="static/vendor/venobox/venobox.css" rel="stylesheet" />
+    <link href="static/vendor/aos/aos.css" rel="stylesheet" />
+
+  <!-- Template Main CSS File 主样式文件 -->
+  <link rel="stylesheet" href="static/css/style.css" />
+</head>
+<body {% block body_attr %}{% endblock %}>
+    <!-- ======= Top Bar 顶栏 ======= -->
+    <section id="topbar" class="d-none d-lg-block">
+      <div class="container clearfix">
+        <div class="contact-info float-left">
+          Github项目仓库地址:
+          <i class="icofont-github"></i
+          ><a href="https://github.com/KurotaniTakeo/SteamBigData"
+            >https://github.com/KurotaniTakeo/SteamBigData</a
+          >
+        </div>
+        <div class="social-links float-right">
+          联系我们:
+          <a href="#" class="qq"><i class="icofont-qq"></i>QQ</a>
+          <a href="#" class="wechat"><i class="icofont-wechat"></i>微信</a>
+          <a href="#" class="mail"><i class="icofont-envelope"></i>邮箱</a>
+        </div>
+      </div>
+    </section>
+    <!-- ======= End Top Bar 顶栏结束 ======= -->
+
+    <!-- ======= Header + Nav 顶部导航栏 ======= -->
+    <header id="header">
+      <div class="container">
+        <div class="logo float-left">
+          <h1 class="text-light">
+            <a href="index">{% block welcome %}{% endblock %}</a>
+          </h1>
+
+        </div>
+
+        <nav class="nav-menu float-right d-none d-lg-block">
+          <ul>
+            <li>
+              <a href="/">主页 <i class="la la-angle-down"></i></a>
+            </li>
+            {% if user_name %}
+            <li>
+                <a href="/SDP">SDP <i class="la la-angle-down"></i></a>
+            </li>
+            <li>
+              <a href="/SRS">SRS<i class="la la-angle-down"></i></a>
+            </li>
+            {% endif %}
+            <li class="drop-down">
+              <a href="">关于</a>
+              <ul>
+                <li><a href="#about">关于我司</a></li>
+                <li><a href="#services">关于SDP</a></li>
+                <li><a href="#portfolio">关于SRS</a></li>
+                <li><a href="#team">团队</a></li>
+              </ul>
+            </li>
+            <li class="drop-down">
+              {% if user_name %}
+              <a href="/user"><i class="icofont-ui-user"></i>{{ user_name }}</a>
+              <ul>
+
+                <li class="drop-down">
+                  <a href="/user">个人中心</a>
+                  <ul>
+                    <li><a href="/preference">偏好选择</a></li>
+                    <li><a href="/game">资料修改</a></li>
+                    <li><a href="/score">我的游戏</a></li>
+                    <li><a href="/word">推荐系统</a></li>
+                  </ul>
+                </li>
+                <li><a href="/logout" class="link-red">退出</a></li>
+              </ul>
+              {% else %}
+              <a href="">未登录</a>
+              <ul>
+                <li><a href="/login">登录</a></li>
+                <li><a href="/register">注册</a></li>
+                <li class="drop-down">
+                  <a href="#">个人中心(不可用)</a>
+                  <ul>
+                    <li><a href="" class="link-red">偏好选择<i class="icofont-ui-block"></i></a></li>
+                    <li><a href="" class="link-red">资料修改<i class="icofont-ui-block"></i></a></li>
+                    <li><a href="" class="link-red">我的游戏<i class="icofont-ui-block"></i></a></li>
+                    <li><a href="" class="link-red">推荐系统<i class="icofont-ui-block"></i></a></li>
+                  </ul>
+                </li>
+              </ul>
+              {% endif %}
+            </li>
+          </ul>
+        </nav>
+        <!-- .nav-menu -->
+      </div>
+    </header>
+    <!-- ======= End Header + Nav  ======= -->
+
+    {% block content %}{% endblock %}
+
+    <!-- Vendor JS Files -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="static/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="static/vendor/php-email-form/validate.js"></script>
+    <script src="static/vendor/jquery-sticky/jquery.sticky.js"></script>
+    <script src="static/vendor/venobox/venobox.min.js"></script>
+    <script src="static/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="static/vendor/counterup/counterup.min.js"></script>
+    <script src="static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="static/vendor/aos/aos.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="static/js/main.js"></script>
+</body>
+</html>

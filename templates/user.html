@@ -1,0 +1,129 @@
+{% extends "base.html" %} {% block title %}用户登录{% endblock %} {% block body_attr %}
+{% endblock %}{% block
+welcome %}个人中心{% endblock %}{% block content %}
+
+    <main id="main">
+      <!-- ======= User Section ======= -->
+      <section id="account" class="account">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
+              <a href="/preference" class="info-box-link">
+                <div class="info-box">
+                  <i class="icofont-heart"></i>
+                  <h3>偏好选择</h3>
+                  <p>选择你心仪的游戏特征</p>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
+              <div class="info-box-chosen">
+                <i class="icofont-pencil"></i>
+                <h3>资料修改</h3>
+                <p>修改用户个人信息</p>
+              </div>
+            </div>
+            <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
+              <a href="" class="info-box-link">
+                <div class="info-box">
+                  <i class="icofont-game"></i>
+                  <h3>我的游戏</h3>
+                  <p>显示我的steam库存</p>
+                </div>
+              </a>
+            </div>
+              <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
+              <a href="" class="info-box-link">
+                <div class="info-box">
+                  <i class="icofont-thumbs-up"></i>
+                  <h3>推荐系统</h3>
+                  <p>使用SRS,基于你的喜好探索新游戏</p>
+                </div>
+              </a>
+            </div>
+            <!-- 显示闪现消息 -->
+            <div class="col-lg-12 mx-auto">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %} {% for category, message in messages %}
+              <div
+                class="alert alert-{{ category }} alert-dismissible fade show"
+                role="alert"
+              >
+                {{ message }}
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="alert"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% endfor %} {% endif %} {% endwith %}
+              <div id="delay-redirect" style="display: none"></div>
+            </div>
+          </div>
+
+      <!-- ======= Counts Section ======= -->
+      <section class="counts section-bg">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="200">
+              <div class="count-box">
+                <i class="icofont-simple-smile" style="color: #20b38e"></i>
+                <span data-toggle="counter-up" data-value="10">0%</span>
+                <p>偏好完善度</p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">
+              <div class="count-box">
+                <i class="icofont-document-folder" style="color: #c042ff"></i>
+                <span data-toggle="counter-up" data-value="100">0%</span>
+                <p>资料完善度</p>
+              </div>
+            </div>
+
+
+
+            <div
+              class="col-lg-3 col-md-6 text-center"
+              data-aos="fade-up"
+              data-aos-delay="400"
+            >
+              <div class="count-box">
+                <i class="icofont-steam" style="color: #15477a"></i>
+
+                <span data-toggle="counter-up">1,463</span>
+                <p>steam游戏数</p>
+              </div>
+            </div>
+
+            <div
+              class="col-lg-3 col-md-6 text-center"
+              data-aos="fade-up"
+              data-aos-delay="600"
+            >
+              <div class="count-box">
+                <i class="icofont-users-alt-5" style="color: #ffb459"></i>
+                <span data-toggle="counter-up">15</span>
+                <p>Hard Workers</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Counts Section -->
+
+
+
+
+        </div>
+      </section>
+      <!-- End Contact Us Section -->
+    </main>
+    <!-- End #main -->
+
+
+
+{% endblock %}
