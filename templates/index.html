@@ -1,8 +1,6 @@
-{% extends "base.html" %} {% block title %}首页 - SDRS{% endblock %} {% block body_attr %}
-
-{% endblock %}{% block
-welcome %}你好{% if user_name %}，{{ user_name }}{% endif %}{% endblock %}{% block content %}
-
+{% extends "base.html" %} {% block title %}首页 - SDRS{% endblock %} {% block
+body_attr %} {% endblock %}{% block welcome %}你好{% if user_name %}，{{
+user_name }}{% endif %}{% endblock %}{% block content %}
 
 <!-- ======= Hero Section ======= -->
 <section id="hero">
@@ -46,11 +44,9 @@ welcome %}你好{% if user_name %}，{{ user_name }}{% endif %}{% endblock %}{% 
             <div class="carousel-content container">
               <h2 class="animated fadeInDown">Steam数据分析平台（SDP）</h2>
               <p class="animated fadeInUp">
-                随着数字游戏市场的迅猛发展，Steam平台已成为全球最大的PC游戏分发平台之一，海量游戏数据蕴含巨大的商业价值。为帮助玩家高效发现优质游戏、辅助开发者洞察市场趋势，本项目拟通过采集Steam平台多维数据，构建可视化分析系统与智能推荐引擎，优化用户体验并提升平台商业价值。
+                本平台通过收集和整合steam提供的游戏商品数据来达到为用户提供专业、清晰、深入的数据可视化服务。
               </p>
-              <a
-                href="#services"
-                class="btn-get-started animated fadeInUp scrollto"
+              <a href="#sdp" class="btn-get-started animated fadeInUp scrollto"
                 >了解更多</a
               >
             </div>
@@ -68,9 +64,7 @@ welcome %}你好{% if user_name %}，{{ user_name }}{% endif %}{% endblock %}{% 
               <p class="animated fadeInUp">
                 一个基于海量Steam数据的游戏推荐系统，旨在为用户提供精准，有效，贴心的游戏内容推送，解决用户在寻找产品时信息渠道单一，主观，盲目等问题
               </p>
-              <a
-                href="#portfolio"
-                class="btn-get-started animated fadeInUp scrollto"
+              <a href="#srs" class="btn-get-started animated fadeInUp scrollto"
                 >了解更多</a
               >
             </div>
@@ -107,145 +101,580 @@ welcome %}你好{% if user_name %}，{{ user_name }}{% endif %}{% endblock %}{% 
 </section>
 <!-- End Hero -->
 <main id="main">
-     <!-- ======= About Us Section ======= -->
-      <section id="about" class="about">
-        <div class="container">
-          <div class="row no-gutters">
-            <div class="col-lg-6 video-box">
-              <img src="static/img/about.jpg" class="img-fluid" alt="" />
-              <a
-                href="https://www.youtube.com/watch?v=jDDaplaOz7Q"
-                class="venobox play-btn mb-4"
-                data-vbtype="video"
-                data-autoplay="true"
-              ></a>
-            </div>
-
-            <div
-              class="col-lg-6 d-flex flex-column justify-content-center about-content"
-            >
-              <div class="section-title">
-                <h2>关于我们</h2>
-                <p>
-                  玩太刀玩的公司，是一家专注于发掘数据信息，探索数据背后的潜力，实现数据最大价值的，立足于信息技术的科技公司。旗下拥有Steam数据分析平台（SDP）和Steam游戏推荐系统（SRS）两大和核心产品：SDP....肥肠牛笔，SRS也是...牛的一笔。
-                </p>
-              </div>
-
-              <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-                <div class="icon"><i class="icofont-database"></i></div>
-                <h4 class="title"><a href="/login">SDP</a></h4>
-                <p class="description">Steam数据分析平台，如你所见，肥肠牛笔</p>
-              </div>
-
-              <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-                <div class="icon"><i class="icofont-thumbs-up"></i></div>
-                <h4 class="title"><a href="">SRS</a></h4>
-                <p class="description">Steam游戏推荐系统，不用多说，牛的一笔</p>
-              </div>
-            </div>
-          </div>
+  <!-- ======= About Us Section ======= -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="row no-gutters">
+        <div class="col-lg-6 video-box">
+          <img src="static/img/about.jpg" class="img-fluid" alt="" />
+          <a
+            href="https://www.youtube.com/watch?v=jDDaplaOz7Q"
+            class="venobox play-btn mb-4"
+            data-vbtype="video"
+            data-autoplay="true"
+          ></a>
         </div>
-      </section>
-      <!-- End About Us Section -->
 
+        <div
+          class="col-lg-6 d-flex flex-column justify-content-center about-content"
+        >
+          <div class="section-title">
+            <h2>关于我们</h2>
+            <p>
+              玩太刀玩的公司，是一家专注于发掘数据信息，探索数据背后的潜力，实现数据最大价值的，立足于信息技术的科技公司。旗下拥有Steam数据分析平台（SDP）和Steam游戏推荐系统（SRS）两大和核心产品：
+            </p>
+          </div>
+          <div class="section-title">
+            <h2>关于SDRS</h2>
+            <p>
+              本项目SDRS，全称Steam Data & Recommendation System
+              为帮助玩家高效发现优质游戏、辅助开发者洞察市场趋势，本项目拟通过采集Steam平台多维数据，构建可视化分析系统与智能推荐引擎，优化用户体验并提升平台商业价值。
+            </p>
+          </div>
 
+          <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon"><i class="icofont-database"></i></div>
+            <h4 class="title"><a href="/login">SDP</a></h4>
+            <p class="description">
+              全称Steam Data Platform：Steam数据分析平台
+            </p>
+          </div>
 
-<!-- ======= Our Team Section 团队部分======= -->
-<section id="team" class="team">
-  <div class="container">
-    <div class="section-title">
-      <h2>团队成员</h2>
-      <p>玩太刀玩的技术有限公司核心员工</p>
-    </div>
-
-    <div class="row">
-      <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up">
-        <div class="member">
-          <div class="pic">
-            <img src="static/image/team/team-1.jpg" class="img-fluid" alt="" />
-          </div>
-          <div class="member-info">
-            <h4>Walter White</h4>
-            <span>Chief Executive Officer</span>
-            <div class="social">
-              <a href=""><i class="icofont-qq"></i></a>
-              <a href=""><i class="icofont-wechat"></i></a>
-              <a href=""><i class="icofont-weibo"></i></a>
-              <a href=""><i class="icofont-envelope"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="col-xl-3 col-lg-4 col-md-6"
-        data-aos="fade-up"
-        data-aos-delay="100"
-      >
-        <div class="member">
-          <div class="pic">
-            <img src="static/image/team/team-2.jpg" class="img-fluid" alt="" />
-          </div>
-          <div class="member-info">
-            <h4>Sarah Jhonson</h4>
-            <span>Product Manager</span>
-            <div class="social">
-              <a href=""><i class="icofont-twitter"></i></a>
-              <a href=""><i class="icofont-facebook"></i></a>
-              <a href=""><i class="icofont-instagram"></i></a>
-              <a href=""><i class="icofont-linkedin"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="col-xl-3 col-lg-4 col-md-6"
-        data-aos="fade-up"
-        data-aos-delay="200"
-      >
-        <div class="member">
-          <div class="pic">
-            <img src="static/image/team/team-3.jpg" class="img-fluid" alt="" />
-          </div>
-          <div class="member-info">
-            <h4>William Anderson</h4>
-            <span>CTO</span>
-            <div class="social">
-              <a href=""><i class="icofont-twitter"></i></a>
-              <a href=""><i class="icofont-facebook"></i></a>
-              <a href=""><i class="icofont-instagram"></i></a>
-              <a href=""><i class="icofont-linkedin"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="col-xl-3 col-lg-4 col-md-6"
-        data-aos="fade-up"
-        data-aos-delay="300"
-      >
-        <div class="member">
-          <div class="pic">
-            <img src="static/image/team/team-4.jpg" class="img-fluid" alt="" />
-          </div>
-          <div class="member-info">
-            <h4>Amanda Jepson</h4>
-            <span>Accountant</span>
-            <div class="social">
-              <a href=""><i class="icofont-twitter"></i></a>
-              <a href=""><i class="icofont-facebook"></i></a>
-              <a href=""><i class="icofont-instagram"></i></a>
-              <a href=""><i class="icofont-linkedin"></i></a>
-            </div>
+          <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon"><i class="icofont-thumbs-up"></i></div>
+            <h4 class="title"><a href="">SRS</a></h4>
+            <p class="description">
+              全称Steam Recommendation System：Steam游戏推荐系统
+            </p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!-- End Our Team Section -->
+  </section>
+  <!-- End About Us Section -->
+
+  <!-- ======= Our Team Section 团队部分======= -->
+  <section id="team" class="team">
+    <div class="container">
+      <div class="section-title">
+        <h2>团队成员</h2>
+        <p>玩太刀玩的技术有限公司核心员工</p>
+      </div>
+
+      <div class="row">
+        <div
+          class="col-xl-3 col-lg-4 col-md-6"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
+          <div class="member">
+            <div class="pic">
+              <img
+                src="static/image/team/team-1.jpg"
+                class="img-fluid"
+                alt="tk头像"
+              />
+            </div>
+            <div class="member-info">
+              <h4>涂恒睿</h4>
+              <span>项目经理</span>
+              <span>后端开发工程师</span>
+              <div class="social">
+                <!-- QQ -->
+                <div class="icon-with-popup">
+                  <i class="icofont-qq"></i>
+                  <div class="popup">
+                    <img
+                      src="static/image/qrcode/qq-thr.png"
+                      alt="thr的QQ二维码"
+                    />
+                  </div>
+                </div>
+
+                <!-- 微信 -->
+                <div class="icon-with-popup">
+                  <i class="icofont-wechat"></i>
+                  <div class="popup">
+                    <img
+                      src="static/image/qrcode/wx-thr.png"
+                      alt="tk的微信二维码"
+                    />
+                  </div>
+                </div>
+
+                <!-- 邮箱 -->
+                <div class="icon-with-popup">
+                  <i class="icofont-envelope"></i>
+                  <div class="popup">1341800468@qq.com</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="col-xl-3 col-lg-4 col-md-6"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
+          <div class="member">
+            <div class="pic">
+              <img
+                src="static/image/team/team-2.jpg"
+                class="img-fluid"
+                alt="tk头像"
+              />
+            </div>
+            <div class="member-info">
+              <h4>田科</h4>
+              <span>前端工程师</span>
+              <span>测试人员、界面设计员</span>
+
+              <div class="social">
+                <!-- QQ -->
+                <div class="icon-with-popup">
+                  <i class="icofont-qq"></i>
+                  <div class="popup">
+                    <img
+                      src="static/image/qrcode/qq-tk.png"
+                      alt="tk的QQ二维码"
+                    />
+                  </div>
+                </div>
+
+                <!-- 微信 -->
+                <div class="icon-with-popup">
+                  <i class="icofont-wechat"></i>
+                  <div class="popup">
+                    <img
+                      src="static/image/qrcode/wx-tk.png"
+                      alt="tk的微信二维码"
+                    />
+                  </div>
+                </div>
+
+                <!-- 邮箱 -->
+                <div class="icon-with-popup">
+                  <i class="icofont-envelope"></i>
+                  <div class="popup">2832190426@qq.com</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="col-xl-3 col-lg-4 col-md-6"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
+          <div class="member">
+            <div class="pic">
+              <img
+                src="static/image/team/team-3.jpg"
+                class="img-fluid"
+                alt="zhr头像"
+              />
+            </div>
+            <div class="member-info">
+              <h4>张皓然</h4>
+              <span>全栈工程师</span>
+              <span>系统设计工程师</span>
+
+              <div class="social">
+                <!-- QQ -->
+                <div class="icon-with-popup">
+                  <i class="icofont-qq"></i>
+                  <div class="popup">
+                    <img
+                      src="static/image/qrcode/qq-zhr.png"
+                      alt="zhr的QQ二维码"
+                    />
+                  </div>
+                </div>
+
+                <!-- 微信 -->
+                <div class="icon-with-popup">
+                  <i class="icofont-wechat"></i>
+                  <div class="popup">
+                    <img
+                      src="static/image/qrcode/wx-zhr.png"
+                      alt="tk的微信二维码"
+                    />
+                  </div>
+                </div>
+
+                <!-- 邮箱 -->
+                <div class="icon-with-popup">
+                  <i class="icofont-envelope"></i>
+                  <div class="popup">kurotake@foxmail.com</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="col-xl-3 col-lg-4 col-md-6"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
+          <div class="member">
+            <div class="pic">
+              <img
+                src="static/image/team/team-4.jpg"
+                class="img-fluid"
+                alt="zx头像"
+              />
+            </div>
+            <div class="member-info">
+              <h4>张鑫</h4>
+              <span>需求分析工程师</span>
+              <span>架构师、测试人员</span>
+
+              <div class="social">
+                <!-- QQ -->
+                <div class="icon-with-popup">
+                  <i class="icofont-qq"></i>
+                  <div class="popup">
+                    <img
+                      src="static/image/qrcode/qq-zx.png"
+                      alt="zx的QQ二维码"
+                    />
+                  </div>
+                </div>
+
+                <!-- 微信 -->
+                <div class="icon-with-popup">
+                  <i class="icofont-wechat"></i>
+                  <div class="popup">
+                    <img
+                      src="static/image/qrcode/wx-zx.png"
+                      alt="zx的微信二维码"
+                    />
+                  </div>
+                </div>
+
+                <!-- 邮箱 -->
+                <div class="icon-with-popup">
+                  <i class="icofont-envelope"></i>
+                  <div class="popup">zx@example.com</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Our Team Section -->
+  <!-- ======= sdp Section sdp部分======= -->
+  <section id="sdp" class="sdp">
+    <div class="container">
+      <div class="section-title">
+        <h2>Steam数据分析平台SDP</h2>
+        <p>
+          随着数字游戏市场的迅猛发展，Steam平台已成为全球最大的PC游戏分发平台之一，海量游戏数据蕴含巨大的商业价值。为帮助玩家高效发现优质游戏、辅助开发者洞察市场趋势，本项目拟通过采集Steam平台多维数据，构建可视化分析系统与智能推荐引擎，优化用户体验并提升平台商业价值。
+        </p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-md-6 icon-box" data-aos="fade-up">
+          <div class="icon"><i class="icofont-computer"></i></div>
+          <h4 class="title"><a href="">Lorem Ipsum</a></h4>
+          <p class="description">
+            Voluptatum deleniti atque corrupti quos dolores et quas molestias
+            excepturi sint occaecati cupiditate non provident
+          </p>
+        </div>
+        <div
+          class="col-lg-4 col-md-6 icon-box"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div class="icon"><i class="icofont-chart-bar-graph"></i></div>
+          <h4 class="title"><a href="">Dolor Sitema</a></h4>
+          <p class="description">
+            Minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat tarad limino ata
+          </p>
+        </div>
+        <div
+          class="col-lg-4 col-md-6 icon-box"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          <div class="icon"><i class="icofont-earth"></i></div>
+          <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
+          <p class="description">
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur
+          </p>
+        </div>
+        <div
+          class="col-lg-4 col-md-6 icon-box"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
+          <div class="icon"><i class="icofont-image"></i></div>
+          <h4 class="title"><a href="">Magni Dolores</a></h4>
+          <p class="description">
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+            officia deserunt mollit anim id est laborum
+          </p>
+        </div>
+        <div
+          class="col-lg-4 col-md-6 icon-box"
+          data-aos="fade-up"
+          data-aos-delay="400"
+        >
+          <div class="icon"><i class="icofont-settings"></i></div>
+          <h4 class="title"><a href="">Nemo Enim</a></h4>
+          <p class="description">
+            At vero eos et accusamus et iusto odio dignissimos ducimus qui
+            blanditiis praesentium voluptatum deleniti atque
+          </p>
+        </div>
+        <div
+          class="col-lg-4 col-md-6 icon-box"
+          data-aos="fade-up"
+          data-aos-delay="500"
+        >
+          <div class="icon"><i class="icofont-tasks-alt"></i></div>
+          <h4 class="title"><a href="">Eiusmod Tempor</a></h4>
+          <p class="description">
+            Et harum quidem rerum facilis est et expedita distinctio. Nam libero
+            tempore, cum soluta nobis est eligendi
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End sdp Section -->
+
+  <!-- ======= Our srs Section ======= -->
+  <section id="srs" class="srs section-bg">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="section-title">
+        <h2>Steam游戏推荐系统SRS</h2>
+        <p>
+          一个基于海量Steam数据的游戏推荐系统，旨在为用户提供精准，有效，贴心的游戏内容推送，解决用户在寻找产品时信息渠道单一，主观，盲目等问题。
+        </p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <ul id="srs-flters">
+            <li data-filter="*" class="filter-active">All</li>
+            <li data-filter=".filter-app">App</li>
+            <li data-filter=".filter-card">Card</li>
+            <li data-filter=".filter-web">Web</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row srs-container">
+        <div class="col-lg-4 col-md-6 srs-item filter-app">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-1.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>App 1</h4>
+              <p>App</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-1.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="App 1"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="#" title="More Details"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 srs-item filter-web">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-2.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>Web 3</h4>
+              <p>Web</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-2.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="Web 3"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="#" title="More Details"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 srs-item filter-app">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-3.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>App 2</h4>
+              <p>App</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-3.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="App 2"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="#" title="More Details"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 srs-item filter-card">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-4.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>Card 2</h4>
+              <p>Card</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-4.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="Card 2"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="#" title="More Details"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 srs-item filter-web">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-5.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>Web 2</h4>
+              <p>Web</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-5.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="Web 2"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="#" title="More Details"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 srs-item filter-app">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-6.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>App 3</h4>
+              <p>App</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-6.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="App 3"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="#" title="More Details"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 srs-item filter-card">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-7.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>Card 1</h4>
+              <p>Card</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-7.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="Card 1"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="#" title="More Details"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 srs-item filter-card">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-8.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>Card 3</h4>
+              <p>Card</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-8.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="Card 3"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="#" title="More Details"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 srs-item filter-web">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-9.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>Web 3</h4>
+              <p>Web</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-9.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="Web 3"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="#" title="More Details"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Our srs Section -->
 </main>
 <!-- End Main -->
 {% endblock %}

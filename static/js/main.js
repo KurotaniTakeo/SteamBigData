@@ -144,16 +144,16 @@
 
   // Porfolio isotope and filter
   $(window).on('load', function() {
-    var portfolioIsotope = $('.portfolio-container').isotope({
-      itemSelector: '.portfolio-item',
+    var srsIsotope = $('.srs-container').isotope({
+      itemSelector: '.srs-item',
       layoutMode: 'fitRows'
     });
 
-    $('#portfolio-flters li').on('click', function() {
-      $("#portfolio-flters li").removeClass('filter-active');
+    $('#srs-flters li').on('click', function() {
+      $("#srs-flters li").removeClass('filter-active');
       $(this).addClass('filter-active');
 
-      portfolioIsotope.isotope({
+      srsIsotope.isotope({
         filter: $(this).data('filter')
       });
     });
@@ -355,3 +355,14 @@ document.getElementById('clear-btn').addEventListener('click', () => {
   },
   "retina_detect": true
 });
+  document.addEventListener('click', function (e) {
+    // 关闭所有弹窗
+    document.querySelectorAll('.icon-with-popup .popup').forEach(p => p.style.display = 'none');
+
+    // 判断是否点击了图标
+    const iconBox = e.target.closest('.icon-with-popup');
+    if (iconBox) {
+      const popup = iconBox.querySelector('.popup');
+      popup.style.display = 'block';
+    }
+  });
