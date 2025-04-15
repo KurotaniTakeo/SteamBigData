@@ -1,13 +1,21 @@
-{% extends "base.html" %} {% block title %}偏好选择{% endblock %} {% block
-body_attr %} data-delay-redirect="{{ 'true' if delay_redirect else 'false' }}"
-{% endblock %}{% block welcome %}个人中心：偏好选择{% endblock %}{% block
-content %}
+{% extends "base.html" %}
 
+{% block title %}偏好选择{% endblock %}
+
+{% block body_attr %}
+  data-delay-redirect="{{ 'true' if delay_redirect else 'false' }}"
+{% endblock %}
+
+{% block welcome %}个人中心：偏好选择{% endblock %}
+
+{% block content %}
 <main id="main">
+
   <!-- ======= Preference Section ======= -->
   <section id="account" class="account">
     <div class="container">
       <div class="row">
+        <!-- 四个 info-box 快捷导航 -->
         <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
           <div class="info-box-chosen">
             <i class="icofont-heart"></i>
@@ -17,7 +25,7 @@ content %}
         </div>
 
         <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
-          <a href="" class="info-box-link">
+          <a href="/change" class="info-box-link">
             <div class="info-box">
               <i class="icofont-pencil"></i>
               <h3>资料修改</h3>
@@ -25,43 +33,41 @@ content %}
             </div>
           </a>
         </div>
+
         <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
-          <a href="" class="info-box-link">
+          <a href="/SDP" class="info-box-link">
             <div class="info-box">
-              <i class="icofont-game"></i>
-              <h3>我的游戏</h3>
-              <p>显示我的steam库存</p>
+                  <i class="icofont-chart-line"></i>
+                  <h3>数据分析</h3>
+                  <p>使用SDP，显示游戏可视化数据</p>
             </div>
           </a>
         </div>
+
         <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
-          <a href=" " class="info-box-link">
+          <a href="/SRS" class="info-box-link">
             <div class="info-box">
               <i class="icofont-thumbs-up"></i>
               <h3>推荐系统</h3>
-              <p>使用SRS,基于你的喜好探索新游戏</p>
+              <p>使用SRS，基于你的喜好探索新游戏</p>
             </div>
           </a>
         </div>
-        <!-- 显示闪现消息 -->
+
+        <!-- 闪现消息 -->
         <div class="col-lg-12 mx-auto">
-          {% with messages = get_flashed_messages(with_categories=true) %} {% if
-          messages %} {% for category, message in messages %}
-          <div
-            class="alert alert-{{ category }} alert-dismissible fade show"
-            role="alert"
-          >
-            {{ message }}
-            <button
-              type="button"
-              class="close"
-              data-dismiss="alert"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          {% endfor %} {% endif %} {% endwith %}
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
           <div id="delay-redirect" style="display: none"></div>
         </div>
       </div>
@@ -71,63 +77,36 @@ content %}
           <h3 class="text-center mb-4">选择你的游戏偏好</h3>
 
           <!-- 游戏标签 -->
-
           <div class="info-box-non-hover">
             <i class="icofont-tag"></i>
             <h3>游戏类型标签</h3>
           </div>
-
           <div id="tags" class="bubble-container mb-4">
-            <span class="bubble">动作</span>
-            <span class="bubble">冒险</span>
-            <span class="bubble">独立</span>
-            <span class="bubble">角色扮演</span>
-            <span class="bubble">策略</span>
-            <span class="bubble">模拟</span>
-            <span class="bubble">休闲</span>
-            <span class="bubble">多人</span>
-            <span class="bubble">开放世界</span>
-            <span class="bubble">RPG</span>
-            <span class="bubble">FPS</span>
+            {% for label in ['动作','冒险','动画与建模','音频制作','休闲','设计与插画','抢先体验','免费游戏','游戏开发','独立游戏','大型多人在线游戏','照片编辑','角色扮演','竞速','模拟','体育','策略','实用工具','视频制作','暴力','网络出版'] %}
+              <span class="bubble" data-type="genre">{{ label }}</span>
+            {% endfor %}
           </div>
 
+          <!-- 功能特征 -->
           <div class="info-box-non-hover">
             <i class="icofont-info-circle"></i>
             <h3>功能特征</h3>
           </div>
-
           <div id="feature" class="bubble-container mb-4">
-            <span class="bubble">单人游戏</span>
-            <span class="bubble">多人游戏</span>
-            <span class="bubble">独立</span>
-            <span class="bubble">合作模式</span>
-            <span class="bubble">Steam 成就</span>
-            <span class="bubble">创意工坊支持</span>
-            <span class="bubble">虚拟现实支持</span>
+            {% for feature in ['提供字幕','合作模式','提供解说','跨平台多人游戏','家庭共享','完全支持手柄','支持 HDR','应用内购买','包含 Source SDK','包含关卡编辑器','局域网合作','局域网 PvP','大型多人在线游戏','多人游戏','在线合作','在线 PvP','部分支持手柄','PvP','远程同乐','手机远程游戏','电视远程游戏','平板电脑远程游戏','共享/分屏','共享/分屏合作','共享/分屏 PvP','单人游戏','统计数据','Steam 成就','Steam 云','Steam 排行榜','Steam 时间线','Steam 集换式卡牌','Steam 创意工坊','SteamVR 收藏品','支持追踪手柄','仅限 VR','支持 VR'] %}
+              <span class="bubble" data-type="category">{{ feature }}</span>
+            {% endfor %}
           </div>
-          <!-- 价格 -->
+
+          <!-- 价格区间 -->
           <div class="info-box-non-hover">
             <i class="icofont-coins"></i>
             <h3>价格区间</h3>
           </div>
           <div id="price" class="bubble-container mb-4">
-            <span class="bubble">免费</span>
-            <span class="bubble">0 - 50 元</span>
-            <span class="bubble">50 - 100 元</span>
-            <span class="bubble">100+ 元</span>
-          </div>
-
-          <!-- 年龄 -->
-          <div class="info-box-non-hover">
-            <i class="icofont-boy"></i>
-            <h3>年龄</h3>
-          </div>
-          <div id="age" class="bubble-container mb-4">
-            <span class="bubble">10后</span>
-            <span class="bubble">00后</span>
-            <span class="bubble">90后</span>
-            <span class="bubble">80后</span>
-            <span class="bubble">70后</span>
+            {% for price in ['免费','0 - 50 元','50 - 100 元','100 - 150 元','150 - 200 元','200+ 元'] %}
+              <span class="bubble" data-type="price">{{ price }}</span>
+            {% endfor %}
           </div>
 
           <!-- 操作系统 -->
@@ -136,26 +115,27 @@ content %}
             <h3>操作系统</h3>
           </div>
           <div id="os" class="bubble-container mb-4">
-            <span class="bubble">Windows</span>
-            <span class="bubble">Mac</span>
-            <span class="bubble">Linux</span>
+            {% for os in ['Windows', 'Mac', 'Linux'] %}
+              <span class="bubble" data-type="platform">{{ os }}</span>
+            {% endfor %}
           </div>
 
-          <!-- 被选中的泡泡掉落后显示区域 -->
+          <!-- 已选显示区域 -->
           <h5 class="text-center mt-5">已选偏好</h5>
           <div id="selection-container" class="selection-dropzone"></div>
 
-          <!-- 提交按钮 -->
           <!-- 提交和清空按钮 -->
           <div class="text-center mt-4">
-            <button class="bubble-button">提交偏好</button>
+            <button id="submit-preference" class="bubble-button">提交偏好</button>
             <button id="clear-btn" class="bubble-button">清空已选</button>
           </div>
         </div>
       </section>
     </div>
   </section>
-  <!-- End Preference Section -->
 </main>
+<script>
+  const existingPreferences = {{ preferences | tojson }};
+</script>
 
 {% endblock %}

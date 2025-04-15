@@ -254,24 +254,49 @@ setTimeout(() => {
 
   // 🛑 关键：添加前检查 bubble 是否仍被选中
   if (original.classList.contains('selected')) {
-    const tag = original.cloneNode(true);
-    tag.classList.add('selected');
-    tag.setAttribute('data-label', original.textContent.trim());
-    targetContainer.appendChild(tag);
+const tag = original.cloneNode(true);
+tag.classList.add('selected');
+tag.setAttribute('data-label', original.textContent.trim());
+
+// ✅ 保留原有的 data-type
+const dataType = original.getAttribute('data-type');
+if (dataType) {
+  tag.setAttribute('data-type', dataType);
+}
+
+targetContainer.appendChild(tag);
+
   }
 
 }, 1300);
 
 }
-
-
-function initBubbleInteraction() {
+document.addEventListener('DOMContentLoaded', () => {
   const bubbles = document.querySelectorAll('.bubble');
   const selectionBox = document.getElementById('selection-container');
 
+  // ⚠️ 页面加载后先进行回显（只影响 UI 状态，不触发点击）
+  bubbles.forEach(bubble => {
+    const type = bubble.getAttribute('data-type');
+    const value = bubble.textContent.trim();
+
+    if (existingPreferences[type] && existingPreferences[type].includes(value)) {
+      bubble.classList.add('selected');
+
+      // 添加到下方区域，但不使用动画（createCloneAndDrop 会有时序问题）
+      const tag = bubble.cloneNode(true);
+      tag.classList.remove('selected'); // ❗不要保留 .selected，避免影响点击逻辑
+      tag.setAttribute('data-label', value);
+      tag.setAttribute('data-type', type);
+      selectionBox.appendChild(tag);
+    }
+  });
+
+  // ✅ 然后再绑定点击事件（避免和上面逻辑冲突）
   bubbles.forEach(bubble => {
     bubble.addEventListener('click', () => {
       const label = bubble.textContent.trim();
+      const type = bubble.getAttribute('data-type');
 
       if (!bubble.classList.contains('selected')) {
         bubble.classList.add('selected');
@@ -279,90 +304,69 @@ function initBubbleInteraction() {
       } else {
         bubble.classList.remove('selected');
 
-        // 精准匹配下方克隆气泡（data-label）
-        const toRemove = selectionBox.querySelectorAll(`.bubble.selected[data-label="${label}"]`);
+        // 移除下方匹配的克隆标签
+        const toRemove = selectionBox.querySelectorAll(`.bubble[data-label="${label}"]`);
         toRemove.forEach(tag => tag.remove());
       }
     });
   });
-}
 
-document.getElementById('clear-btn').addEventListener('click', () => {
-  const selectionBox = document.getElementById('selection-container');
-  selectionBox.innerHTML = ''; // 清空下方容器
-
-  // 把所有上方的 bubble 恢复未选状态
-  document.querySelectorAll('.bubble.selected').forEach(bubble => {
-    bubble.classList.remove('selected');
+  // 清空按钮逻辑
+  document.getElementById('clear-btn').addEventListener('click', () => {
+    selectionBox.innerHTML = '';
+    document.querySelectorAll('.bubble.selected').forEach(bubble => {
+      bubble.classList.remove('selected');
+    });
   });
-});
 
-    document.addEventListener('DOMContentLoaded', initBubbleInteraction);
-    document.getElementById('clear-btn').addEventListener('click', () => {
-  const selectionBox = document.getElementById('selection-container');
-  selectionBox.innerHTML = ''; // 清空下方容器
+  // 提交逻辑
+  document.getElementById('submit-preference').addEventListener('click', async () => {
+    const selections = {
+      genre: [],
+      category: [],
+      price: [],
+      platform: []
+    };
 
-  // 把所有上方的 bubble 恢复未选状态
-  document.querySelectorAll('.bubble.selected').forEach(bubble => {
-    bubble.classList.remove('selected');
+    document.querySelectorAll('#selection-container .bubble').forEach(bubble => {
+      const type = bubble.getAttribute('data-type');
+      const value = bubble.textContent.trim();
+
+      if(type === 'genre') selections.genre.push(value);
+      else if(type === 'category') selections.category.push(value);
+      else if(type === 'price') selections.price.push(value);
+      else if(type === 'platform') selections.platform.push(value);
+    });
+
+    try {
+      const response = await fetch('/submit-preferences', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(selections)
+      });
+
+      if(response.ok) {
+        alert('偏好设置已保存！');
+      }
+    } catch (error) {
+      console.error('保存失败:', error);
+    }
   });
-});
 
-    particlesJS("particles-js", {
-  "particles": {
-    "number": {
-      "value": 80,
-      "density": {
-        "enable": true,
-        "value_area": 800
-      }
-    },
-    "color": {
-      "value": "#00aaff"
-    },
-    "shape": {
-      "type": "circle"
-    },
-    "opacity": {
-      "value": 0.5
-    },
-    "size": {
-      "value": 3,
-      "random": true
-    },
-    "line_linked": {
-      "enable": true,
-      "distance": 150,
-      "color": "#00ccff",
-      "opacity": 0.4,
-      "width": 1
-    },
-    "move": {
-      "enable": true,
-      "speed": 3,
-      "direction": "none",
-      "random": false,
-      "out_mode": "bounce"
-    }
-  },
-  "interactivity": {
-    "events": {
-      "onhover": {
-        "enable": true,
-        "mode": "repulse"
-      }
-    }
-  },
-  "retina_detect": true
-});
+  // 图标弹窗逻辑
   document.addEventListener('click', function (e) {
-    // 关闭所有弹窗
     document.querySelectorAll('.icon-with-popup .popup').forEach(p => p.style.display = 'none');
 
-    // 判断是否点击了图标
     const iconBox = e.target.closest('.icon-with-popup');
     if (iconBox) {
       const popup = iconBox.querySelector('.popup');
       popup.style.display = 'block';
     }
   });
+});
+
+
+
+

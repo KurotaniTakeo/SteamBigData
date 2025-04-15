@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}资料修改{% endblock %}
+
+{% block body_attr %}
+  data-delay-redirect="{{ 'true' if delay_redirect else 'false' }}"
+{% endblock %}
+
+{% block welcome %}个人中心：资料修改{% endblock %}
+
+{% block content %}
+<main id="main">
+
+  <!-- ======= Change Section ======= -->
+  <section id="account" class="account">
+    <div class="container">
+      <div class="row">
+        <!-- 四个 info-box 快捷导航 -->
+        <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
+          <a href="/preference" class="info-box-link">
+          <div class="info-box">
+            <i class="icofont-heart"></i>
+            <h3>偏好选择</h3>
+            <p>选择你心仪的游戏特征</p>
+          </div>
+          </a>
+        </div>
+
+        <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
+
+            <div class="info-box-chosen">
+              <i class="icofont-pencil"></i>
+              <h3>资料修改</h3>
+              <p>修改用户个人信息</p>
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
+          <a href="/SDP" class="info-box-link">
+            <div class="info-box">
+                  <i class="icofont-chart-line"></i>
+                  <h3>数据分析</h3>
+                  <p>使用SDP，显示游戏可视化数据</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
+          <a href="/SRS" class="info-box-link">
+            <div class="info-box">
+              <i class="icofont-thumbs-up"></i>
+              <h3>推荐系统</h3>
+              <p>使用SRS，基于你的喜好探索新游戏</p>
+            </div>
+          </a>
+        </div>
+        <!-- End 四个 info-box 快捷导航 -->
+
+        <!-- 闪现消息 -->
+        <div class="col-lg-12 mx-auto">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          <div id="delay-redirect" style="display: none"></div>
+        </div>
+        <!-- End 闪现消息 -->
+      </div>
+
+<section id="change" class="container my-5">
+  <div class="container">
+    <h3 class="text-center mb-4">修改你的用户资料</h3>
+
+    <!-- 显示闪现消息 -->
+    <div class="col-lg-12 mx-auto">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    <!-- 用户资料修改表单 -->
+    <div class="row">
+      <div class="col-lg-12" data-aos="fade-up" data-aos-delay="300">
+        <form action="{{ url_for('update_user_info') }}" method="post" role="form" class="info-form">
+
+          <!-- 邮箱 -->
+          <div class="form-row justify-content-center">
+            <div class="col-lg-7 form-group">
+              <input type="email" name="mail" class="form-control" id="mail"
+                     placeholder="请输入你的邮箱地址" required />
+            </div>
+          </div>
+
+          <!-- 密码 -->
+          <div class="form-row justify-content-center">
+            <div class="col-lg-7 form-group">
+              <input type="password" name="password" class="form-control" id="password"
+                     placeholder="请输入你的新密码（留空则不修改）" minlength="6" />
+            </div>
+          </div>
+
+          <!-- 用户名 -->
+          <div class="form-row justify-content-center">
+            <div class="col-lg-7 form-group">
+              <input type="text" name="user_name" class="form-control" id="user_name"
+                     placeholder="请输入你的用户名" required />
+            </div>
+          </div>
+
+          <!-- 年龄 -->
+          <div class="form-row justify-content-center">
+            <div class="col-lg-7 form-group">
+              <input type="number" name="age" class="form-control" id="age"
+                     placeholder="请输入你的年龄" />
+            </div>
+          </div>
+
+          <!-- 性别 -->
+          <div class="form-row justify-content-center">
+            <div class="col-lg-7 form-group">
+              <input type="text" name="gender" class="form-control" id="gender"
+                     placeholder="请输入你的性别" />
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button type="submit">保存修改</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+    </div>
+  </section>
+</main>
+
+{% endblock %}
