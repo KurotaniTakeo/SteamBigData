@@ -4,6 +4,10 @@ from pymysql import Connection
 from pymysql.cursors import DictCursor
 import tomlkit
 from contextlib import contextmanager
+import ast
+import re
+
+
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 app.secret_key = config('SECRET_KEY')
@@ -166,13 +170,108 @@ def SDP():
         return jsonify({'message': '未登录，无法使用SDP'}), 403
     return render_template("SDP.html", user_name=user_name, user_id=user_id)
 
-@app.route('/SRS')
+
+
+def smart_parse_list(text):
+    if not text:
+        return []
+    if isinstance(text, list):
+        return text
+    try:
+        return ast.literal_eval(text)
+    except:
+        return [i.strip(" []'\"") for i in re.split(r"[,\n]", text) if i.strip()]
+from flask import request  # 确保你有导入这个
+
+@app.route('/SRS', methods=['GET'])
 def SRS():
     user_name = session.get('user_name')
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({'message': '未登录，无法使用SRS'}), 403
-    return render_template("SRS.html", user_name=user_name, user_id=user_id)
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 20
+    offset = (page - 1) * per_page
+
+    datalist = []
+    total_pages = 1
+
+    try:
+        with Database.cursor() as cursor:
+            # 获取该用户的推荐游戏 appid 字符串
+            cursor.execute("SELECT recommend_games FROM users WHERE uid = %s", (user_id,))
+            result = cursor.fetchone()
+            if not result or not result[0]:
+                return render_template("SRS.html", games=[], page=1, total_pages=1, page_numbers=[1],
+                                       user_name=user_name, user_id=user_id)
+
+            appid_list = result[0].split(",")  # 字符串转数组
+            appid_list = list(dict.fromkeys(appid_list))  # 去重（可选）
+            appid_list = [int(i) for i in appid_list if i.isdigit()]  # 转成整数
+
+            # 分页处理推荐游戏
+            total_games = len(appid_list)
+            total_pages = (total_games + per_page - 1) // per_page
+            appids_this_page = appid_list[offset: offset + per_page]
+
+            if not appids_this_page:
+                return render_template("SRS.html", games=[], page=page, total_pages=total_pages,
+                                       page_numbers=[page], user_name=user_name, user_id=user_id)
+
+            # 查询当前页的游戏详情
+            placeholders = ','.join(['%s'] * len(appids_this_page))
+            query = f"SELECT * FROM games WHERE appid IN ({placeholders})"
+            cursor.execute(query, appids_this_page)
+            rows = cursor.fetchall()
+
+            for item in rows:
+                item = list(item)
+                item[14] = smart_parse_list(item[14])
+                item[15] = smart_parse_list(item[15])
+                datalist.append(item)
+
+    except Exception as e:
+        return jsonify({'error': f'数据库查询失败：{str(e)}'}), 500
+
+    # 分页按钮逻辑
+    if total_pages <= 10:
+        page_numbers = list(range(1, total_pages + 1))
+    else:
+        if page <= 5:
+            page_numbers = [1, 2, 3, 4, 5, 6, '...', total_pages]
+        elif page >= total_pages - 4:
+            page_numbers = [1, '...', total_pages - 5, total_pages - 4, total_pages - 3, total_pages - 2, total_pages - 1, total_pages]
+        else:
+            page_numbers = [1, '...', page - 1, page, page + 1, '...', total_pages]
+
+    return render_template("SRS.html",
+                           games=datalist,
+                           page=page,
+                           total_pages=total_pages,
+                           page_numbers=page_numbers,
+                           user_name=user_name,
+                           user_id=user_id)
+
+from recommendations import generate_recommendations
+# 刷新偏好
+@app.route('/refresh_recommendations', methods=['POST'])
+def refresh_recommendations():
+    try:
+        generate_recommendations(refresh=True)
+        return jsonify({"status": "success", "message": "推荐列表已刷新!"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)})
+
+
+@app.route('/price_distribution')
+def price_distribution():
+    user_name = session.get('user_name')
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'message': '未登录，无法使用SRS'}), 403
+    return render_template("steam_price_distribution.html", user_name=user_name, user_id=user_id)
+
 
 @app.route('/change')
 def change():
@@ -286,8 +385,19 @@ translations = {
         "暴力": "Violent",
         "网络出版": "Web Publishing"
     },
-    "price": {},  # 添加空字典，避免 KeyError
-    "platform": {}  # 同上
+    "price": {
+        "免费": "free",
+        "0 - 50 元": "low",
+        "50 - 100 元": "medium",
+        "100 - 150 元": "medium",
+        "150 - 200 元": "high",
+        "200+ 元": "high"
+    },  # 添加空字典，避免 KeyError
+    "platform": {
+        "Linux": "platforms_linux",
+        "Windows": "platforms_windows",
+        "Mac": "platforms_mac"
+    }  # 同上
 
 }
 

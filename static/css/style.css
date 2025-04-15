@@ -1569,3 +1569,182 @@ section {
   border-color: #ccc transparent transparent transparent;
 }
 
+
+/*--------------------------------------------------------------
+# SRS样式
+--------------------------------------------------------------*/
+.game-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 1500px;         /* 设置容器最大宽度 */
+    margin: 0 auto;            /* 居中对齐 */
+    padding: 0 40px;           /* 控制左右距离屏幕的间距 */
+}
+
+.game-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-card {
+    background-color: #428BCAB2;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(66, 139, 202, 0.4);
+    padding: 20px 0 30px 0;
+    margin-bottom: 30px;
+    width: 300px;
+    border: 3px solid #428bca;
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+    position: relative;  /* 确保弹出窗口是相对于卡片定位的 */
+}
+
+.game-card:hover {
+    transform: translateY(-5px); /* 仅悬浮卡片向上移动 */
+    z-index: 2; /* 确保悬浮卡片在其他卡片上方 */
+}
+
+/* 游戏海报样式 */
+.game-poster {
+    width: 100%;
+    aspect-ratio: 380 / 180;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* 弹出详细信息框 */
+.game-details {
+    position: absolute;   /* 绝对定位，放置在卡片的顶部 */
+    top: 100%;            /* 从卡片的下边缘开始弹出 */
+    left: 0;
+    right: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+    background-color: #428bca;  /* 设置浅蓝色背景 */
+    padding: 10px;
+    color: #333; /* 字体颜色 */
+    z-index: 1;  /* 确保弹出框位于卡片上方 */
+}
+
+/* 悬浮时显示详情 */
+.game-card:hover .game-details {
+    max-height: 500px;  /* 够大就行 */
+    opacity: 1;
+}
+
+/* 卡片标题 */
+.game-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: rgb(255, 255, 255);
+}
+
+/* 游戏信息 */
+.game-info {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+/* 标签样式 */
+.game-tag {
+    display: inline-block;
+    background-color: orange;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin: 2px;
+    font-size: 12px;
+}
+
+.game-tag-1 {
+    display: inline-block;
+    background-color: #c45454;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin: 2px;
+    font-size: 12px;
+}
+
+.game-tag-2 {
+    display: inline-block;
+    background-color: #279a33;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin: 2px;
+    font-size: 12px;
+}
+
+/* 分页样式 */
+.pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 30px;
+}
+
+.page-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #428bca;
+    border-radius: 5px;
+    color: #428bca;
+    background-color: white;
+    text-decoration: none;
+    transition: 0.2s ease-in-out;
+}
+
+.page-btn:hover {
+    background-color: #428bca;
+    text-decoration: none;
+    color: white;
+}
+
+.page-btn.active {
+    background-color: #428bca;
+    color: white;
+    font-weight: bold;
+    cursor: default;
+}
+/* 刷新按钮 */
+.refresh-btn-wrapper {
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  margin: 40px 0;           /* 上下留白 */
+}
+
+
+#refresh-btn {
+  background-color: #428bca;
+  color: white;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 0;
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 0 10px;
+}
+
+#refresh-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 123, 255, 0.35);
+}
+
+#refresh-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+

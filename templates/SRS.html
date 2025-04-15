@@ -1,8 +1,102 @@
-{% extends "base.html" %} {% block title %}SDP{% endblock %} {% block body_attr %}
+{% extends "base.html" %}
 
-{% endblock %}{% block
-welcome %}SRS：Steam游戏推荐系统 {% endblock %}{% block content %}
+{% block title %}SDP{% endblock %}
 
+{% block body_attr %}{% endblock %}
 
-
+{% block welcome %}
+SRS：Steam游戏推荐系统
 {% endblock %}
+
+{% block content %}
+          <h2 class="text-center mb-4">为你推荐以下游戏</h2>
+<div class="refresh-btn-wrapper">
+  <button id="refresh-btn">刷新推荐列表</button>
+</div>
+<div class="game-container">
+
+    {% for game in games %}
+    <div class="game-card">
+        {% if game[16] %}
+            <img src="{{ game[16] }}"
+                 alt="{{ game[1] }}"
+                 class="game-poster"
+                 referrerpolicy="no-referrer"
+                 onerror="this.onerror=null; this.src='/static/default-poster.jpg'">
+        {% else %}
+            <div class="game-poster" style="background: #eee; display: flex; align-items: center; justify-content: center;">
+                暂无海报
+            </div>
+        {% endif %}
+            <div class="game-title">{{ game[1] }}</div>
+        <div class="game-details">
+
+            <div class="game-info">价格: {{ game[2] }}</div>
+            <div class="game-info">评论数: {{ game[3] }}</div>
+            <div class="game-info">评分: {{ game[4] }}</div>
+            <div class="game-info">支持手柄: {{ game[5] }}</div>
+            <div class="game-info">开发商: {{ game[6] }}</div>
+            <div class="game-info">发行商: {{ game[7] }}</div>
+            <div class="game-info">发布日期: {{ game[11] }}</div>
+
+            <div class="game-info">
+                <strong>平台:</strong>
+                {% if game[8] %}<span class="game-tag">Windows</span>{% endif %}
+                {% if game[9] %}<span class="game-tag">Mac</span>{% endif %}
+                {% if game[10] %}<span class="game-tag">Linux</span>{% endif %}
+            </div>
+
+            <div class="game-info">
+                <strong>类型:</strong>
+                {% for cat in game[14] %}<span class="game-tag-1">{{ cat }}</span>{% endfor %}
+            </div>
+
+            <div class="game-info">
+                <strong>分类:</strong>
+                {% for genre in game[15] %}<span class="game-tag-2">{{ genre }}</span>{% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="pagination">
+    {% if page > 1 %}
+        <a class="page-btn" href="{{ url_for('SRS', page=1) }}">«</a>
+        <a class="page-btn" href="{{ url_for('SRS', page=page-1) }}">‹</a>
+    {% endif %}
+
+    {% for p in page_numbers %}
+        {% if p == '...' %}
+            <span class="page-btn">...</span>
+        {% elif p == page %}
+            <span class="page-btn active">{{ p }}</span>
+        {% else %}
+            <a class="page-btn" href="{{ url_for('SRS', page=p) }}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page < total_pages %}
+        <a class="page-btn" href="{{ url_for('SRS', page=page+1) }}">›</a>
+        <a class="page-btn" href="{{ url_for('SRS', page=total_pages) }}">»</a>
+    {% endif %}
+</div>
+
+
+
+
+<br /><br /><br /><br /><br /><br />
+{% endblock %}
+    <script>
+        $(document).ready(function() {
+            $("#refreshButton").click(function() {
+                $.post("/refresh_recommendations", function(data) {
+                    if (data.status === "success") {
+                        $("#statusMessage").html('<span style="color: green;">' + data.message + '</span>');
+                    } else {
+                        $("#statusMessage").html('<span style="color: red;">' + data.message + '</span>');
+                    }
+                });
+            });
+        });
+    </script>
