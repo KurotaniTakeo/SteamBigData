@@ -141,9 +141,18 @@ def get_profile_completeness(user_id):
     with Database.cursor() as cursor:
         cursor.execute("SELECT age, gender FROM users WHERE uid = %s", (user_id,))
         row = cursor.fetchone()
-        filled = sum(1 for value in row if value is not None)
+
+    age = row[0]
+    gender = row[1]
+
+    # 年龄必须大于 0 且非空，性别必须是非空字符串
+    age_filled = age is not None and age > 0
+    gender_filled = gender is not None and gender.strip() != ""
+
+    filled = sum([age_filled, gender_filled])
     completeness = filled / 2 * 100
     return round(completeness)
+
 # 用于游戏数统计
 def get_total_game_count():
     with Database.cursor() as cursor:
