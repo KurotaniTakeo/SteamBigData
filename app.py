@@ -124,13 +124,58 @@ def register():
 
     return render_template("register.html")
 
+# 偏好完善度
+def get_preference_completeness(user_id):
+    prefer_types = {"price", "genre", "category", "platform"}
+    user_pref_types = set()
+
+    with Database.cursor() as cursor:
+        cursor.execute("SELECT DISTINCT prefer FROM preferences WHERE user_id = %s", (user_id,))
+        rows = cursor.fetchall()
+        user_pref_types = {row[0] for row in rows}
+
+    completeness = len(user_pref_types) / len(prefer_types) * 100
+    return round(completeness)
+# 用于资料完善度
+def get_profile_completeness(user_id):
+    with Database.cursor() as cursor:
+        cursor.execute("SELECT age, gender FROM users WHERE uid = %s", (user_id,))
+        row = cursor.fetchone()
+        filled = sum(1 for value in row if value is not None)
+    completeness = filled / 2 * 100
+    return round(completeness)
+# 用于游戏数统计
+def get_total_game_count():
+    with Database.cursor() as cursor:
+        cursor.execute("SELECT COUNT(*) FROM games")
+        return cursor.fetchone()[0]
+
+# 用于注册人数统计
+def get_total_user_count():
+    with Database.cursor() as cursor:
+        cursor.execute("SELECT COUNT(*) FROM users")
+        return cursor.fetchone()[0]
+
 
 @app.route('/user')
 def user():
     user_name = session.get('user_name')
     user_id = session.get('user_id')
-    return render_template("user.html", user_name=user_name, user_id=user_id)
 
+    pref_score = get_preference_completeness(user_id)
+    profile_score = get_profile_completeness(user_id)
+    game_count = get_total_game_count()
+    user_count = get_total_user_count()
+
+    return render_template(
+        "user.html",
+        user_name=user_name,
+        user_id=user_id,
+        pref_score=pref_score,
+        profile_score=profile_score,
+        game_count=game_count,
+        user_count=user_count
+    )
 
 @app.route('/preference')
 def preference():

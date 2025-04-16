@@ -74,14 +74,15 @@ welcome %}个人中心{% endblock %}{% block content %}
             <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="200">
               <div class="count-box">
                 <i class="icofont-simple-smile" style="color: #20b38e"></i>
-                <span data-toggle="counter-up" data-value="10">0%</span>
+                <span data-toggle="counter-up" data-value={{ pref_score }}>0%</span>
                 <p>偏好完善度</p>
               </div>
             </div>
             <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">
               <div class="count-box">
                 <i class="icofont-document-folder" style="color: #c042ff"></i>
-                <span data-toggle="counter-up" data-value="100">0%</span>
+                <span data-toggle="counter-up" data-value={{ profile_score }}>0%</span>
+
                 <p>资料完善度</p>
               </div>
             </div>
@@ -96,7 +97,7 @@ welcome %}个人中心{% endblock %}{% block content %}
               <div class="count-box">
                 <i class="icofont-steam" style="color: #15477a"></i>
 
-                <span data-toggle="counter-up">1,463</span>
+                <span data-toggle="counter-up">{{ game_count }}</span>
                 <p>收录steam游戏数</p>
               </div>
             </div>
@@ -108,8 +109,8 @@ welcome %}个人中心{% endblock %}{% block content %}
             >
               <div class="count-box">
                 <i class="icofont-users-alt-5" style="color: #ffb459"></i>
-                <span data-toggle="counter-up">15</span>
-                <p>Hard Workers</p>
+                <span data-toggle="counter-up">{{ user_count }}</span>
+                <p>注册人数</p>
               </div>
             </div>
           </div>
