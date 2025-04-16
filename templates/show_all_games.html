@@ -5,14 +5,11 @@
 {% block body_attr %}{% endblock %}
 
 {% block welcome %}
-SRS：Steam游戏推荐系统
+我们收录的所有游戏
 {% endblock %}
 
 {% block content %}
-          <h2 class="text-center mb-4">为你推荐以下游戏</h2>
-<div class="refresh-btn-wrapper">
-  <button id="refresh-btn">刷新推荐列表</button>
-</div>
+          <h2 class="text-center mb-4">我们收录的游戏</h2>
 <div class="game-container">
 
     {% for game in games %}
@@ -62,8 +59,8 @@ SRS：Steam游戏推荐系统
 
 <div class="pagination">
     {% if page > 1 %}
-        <a class="page-btn" href="{{ url_for('SRS', page=1) }}">«</a>
-        <a class="page-btn" href="{{ url_for('SRS', page=page-1) }}">‹</a>
+        <a class="page-btn" href="{{ url_for('show_all_games', page=1) }}">«</a>
+        <a class="page-btn" href="{{ url_for('show_all_games', page=page-1) }}">‹</a>
     {% endif %}
 
     {% for p in page_numbers %}
@@ -72,19 +69,16 @@ SRS：Steam游戏推荐系统
         {% elif p == page %}
             <span class="page-btn active">{{ p }}</span>
         {% else %}
-            <a class="page-btn" href="{{ url_for('SRS', page=p) }}">{{ p }}</a>
+            <a class="page-btn" href="{{ url_for('show_all_games', page=p) }}">{{ p }}</a>
         {% endif %}
     {% endfor %}
 
     {% if page < total_pages %}
-        <a class="page-btn" href="{{ url_for('SRS', page=page+1) }}">›</a>
-        <a class="page-btn" href="{{ url_for('SRS', page=total_pages) }}">»</a>
+        <a class="page-btn" href="{{ url_for('show_all_games', page=page+1) }}">›</a>
+        <a class="page-btn" href="{{ url_for('show_all_games', page=total_pages) }}">»</a>
     {% endif %}
-    <a href="/show_all_games">
-         <button id="show-all-btn">去看看我们收录的所有游戏</button>
-    </a>
 </div>
 
 <br /><br /><br /><br /><br /><br />
-{% endblock %}
 
+{% endblock %}

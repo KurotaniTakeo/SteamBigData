@@ -1,13 +1,19 @@
+from pathlib import Path
+import numpy as np
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from decouple import config
 from pymysql import Connection
 from pymysql.cursors import DictCursor
 import tomlkit
+from PIL import Image
 from contextlib import contextmanager
 import ast
 import re
-
-
+import base64
+import io
+from wordcloud import WordCloud
+import jieba
+import jieba.analyse
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 app.secret_key = config('SECRET_KEY')
@@ -264,13 +270,99 @@ def refresh_recommendations():
         return jsonify({"status": "error", "message": str(e)})
 
 
+#全部游戏
+@app.route('/show_all_games', methods=['GET'])
+def show_all_games():
+    # 统一风格：获取 session 参数部分抽离
+    user_name = session.get('user_name')
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'message': '未登录，无法使用'}), 403
+
+    # 统一风格：获取分页参数部分
+    page = request.args.get('page', 1, type=int)
+    per_page = 20
+    offset = (page - 1) * per_page
+
+    datalist = []
+    total_pages = 1
+
+    # 统一风格：数据库查询逻辑放入 try 块中
+    try:
+        with Database.cursor() as cursor:
+            # 查询总数 & 页码
+            cursor.execute("SELECT COUNT(*) FROM games")
+            total_games = cursor.fetchone()[0]
+            total_pages = (total_games + per_page - 1) // per_page
+
+            # 查询本页数据
+            query = "SELECT * FROM games LIMIT %s OFFSET %s"
+            cursor.execute(query, (per_page, offset))
+            rows = cursor.fetchall()
+        for item in rows:
+            item = list(item)
+            item[14] = smart_parse_list(item[14])
+            item[15] = smart_parse_list(item[15])
+            datalist.append(item)
+
+    except Exception as e:
+        return jsonify({'error': f'数据库查询失败：{str(e)}'}), 500
+
+    finally:
+        if 'cur' in locals():
+            cursor.close()
+        if 'con' in locals():
+            cursor.close()
+
+    # 统一风格：分页页码列表
+    if total_pages <= 10:
+        page_numbers = list(range(1, total_pages + 1))
+    else:
+        if page <= 5:
+            page_numbers = [1, 2, 3, 4, 5, 6, '...', total_pages]
+        elif page >= total_pages - 4:
+            page_numbers = [1, '...', total_pages - 5, total_pages - 4, total_pages - 3, total_pages - 2, total_pages - 1, total_pages]
+        else:
+            page_numbers = [1, '...', page - 1, page, page + 1, '...', total_pages]
+
+    return render_template("show_all_games.html",
+                           games=datalist,
+                           page=page,
+                           total_pages=total_pages,
+                           page_numbers=page_numbers,
+                           user_name=user_name,
+                           user_id=user_id)
+
 @app.route('/price_distribution')
 def price_distribution():
     user_name = session.get('user_name')
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({'message': '未登录，无法使用SRS'}), 403
-    return render_template("steam_price_distribution.html", user_name=user_name, user_id=user_id)
+    return render_template("steam_price_distribution_line.html", user_name=user_name, user_id=user_id)
+@app.route('/game_platform')
+def game_platform():
+    user_name = session.get('user_name')
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'message': '未登录，无法使用SRS'}), 403
+    return render_template("game_platform_distribution.html", user_name=user_name, user_id=user_id)
+@app.route('/game_release')
+def game_release():
+    user_name = session.get('user_name')
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'message': '未登录，无法使用SRS'}), 403
+    return render_template("game_release_trend.html", user_name=user_name, user_id=user_id)
+@app.route('/recommend_bar')
+def recommend_bar():
+    user_name = session.get('user_name')
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'message': '未登录，无法使用SRS'}), 403
+    return render_template("recommendation_bar_chart.html", user_name=user_name, user_id=user_id)
+
+
 
 
 @app.route('/change')
@@ -438,6 +530,143 @@ def submit_preferences():
     except Exception as e:
         print(f"偏好提交失败: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
+
+def generate_wordcloud(text_weights, color, mask_png_path=None):
+    # 读取PNG蒙版
+    mask = None
+    if mask_png_path and Path(mask_png_path).exists():
+        try:
+            mask = np.array(Image.open(mask_png_path))
+            # 使用alpha通道作为蒙版
+            if mask.ndim == 3:
+                # 反转alpha通道：0变255，255变0
+                mask = 255 - mask[:, :, 3]  # 反转alpha通道
+        except Exception as e:
+            print(f"加载蒙版失败: {e}")
+
+    wc = WordCloud(
+        width=600,
+        height=400,
+        background_color='white',
+        font_path='simhei.ttf',
+        color_func=lambda *args, **kwargs: color,
+        prefer_horizontal=1,
+        scale=2,
+        mask=mask,  # 使用反转后的蒙版
+        contour_width=0,
+        contour_color=None,
+        collocations=False
+    )
+
+    if text_weights:
+        wc.generate_from_frequencies(text_weights)
+    else:
+        # 如果没有数据，生成空图片
+        wc.generate_from_text(" ")
+
+    # 转换为base64编码的图片
+    img_buffer = io.BytesIO()
+    wc.to_image().save(img_buffer, format='PNG')
+    img_str = base64.b64encode(img_buffer.getvalue()).decode('utf-8')
+    return img_str
+
+# 分析评论并生成词云
+def analyze_comments(appid):
+    with Database.cursor()as cursor:  # 使用 with
+
+
+        # 查询好评评论
+        cursor.execute("""
+            SELECT comments, duration FROM recommendation 
+            WHERE appid = %s AND positive = TRUE
+        """, (appid,))
+        positive_comments = cursor.fetchall()
+
+        # 查询差评评论
+        cursor.execute("""
+            SELECT comments, duration FROM recommendation 
+            WHERE appid = %s AND positive = FALSE
+        """, (appid,))
+        negative_comments = cursor.fetchall()
+
+        cursor.close()
+
+    # 处理好评数据
+    positive_text = ' '.join([comment[0] for comment in positive_comments])
+    positive_weights = {}
+    if positive_comments:
+        # 使用TF-IDF提取关键词，结合游玩时长作为权重
+        for comment, duration in positive_comments:
+            words = jieba.analyse.extract_tags(
+                comment,
+                topK=20,
+                withWeight=True,
+                allowPOS=('n', 'vn', 'v')
+            )
+            for word, weight in words:
+                # 权重 = TF-IDF权重 * 游玩时长系数 (1 + duration/100)
+                duration_factor = 1 + (duration / 100) if duration else 1
+                combined_weight = weight * duration_factor
+                if word in positive_weights:
+                    positive_weights[word] += combined_weight
+                else:
+                    positive_weights[word] = combined_weight
+
+    # 处理差评数据
+    negative_text = ' '.join([comment[0] for comment in negative_comments])
+    negative_weights = {}
+    if negative_comments:
+        for comment, duration in negative_comments:
+            words = jieba.analyse.extract_tags(
+                comment,
+                topK=20,
+                withWeight=True,
+                allowPOS=('n', 'vn', 'v')
+            )
+            for word, weight in words:
+                duration_factor = 1 + (duration / 100) if duration else 1
+                combined_weight = weight * duration_factor
+                if word in negative_weights:
+                    negative_weights[word] += combined_weight
+                else:
+                    negative_weights[word] = combined_weight
+
+            # 生成词云 - 使用PNG蒙版
+            positive_img = generate_wordcloud(
+                positive_weights,
+                '#62b7e9',
+                'static/image/masks/thumbs-up.png'  # 修改为PNG路径
+            )
+
+            negative_img = generate_wordcloud(
+                negative_weights,
+                '#cd5d60',
+                'static/image/masks/thumbs-down.png'  # 修改为PNG路径
+            )
+
+            return {
+                'positive': positive_img,
+                'negative': negative_img
+            }
+@app.route('/wordcloud')
+def wordcloud():
+    user_name = session.get('user_name')
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'message': '未登录，无法使用SRS'}), 403
+    jieba.initialize()
+    return render_template("wordcloud.html", user_name=user_name, user_id=user_id)
+
+@app.route('/wordcloud_analyse', methods=['POST'])
+def wordcloud_analyse():
+    appid = request.form.get('appid')
+    if not appid or not appid.isdigit():
+        return jsonify({'error': '请输入有效的游戏ID'}), 400
+    try:
+        result = analyze_comments(int(appid))
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

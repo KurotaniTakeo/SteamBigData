@@ -1463,6 +1463,7 @@ section {
   text-align: center;
   background: rgba(31, 53, 72, 0.6);
   padding-bottom: 30px;
+  text-decoration: none;
 }
 
 .srs .srs-wrap .srs-info h4 {
@@ -1490,6 +1491,7 @@ section {
   height: 35px;
   display: inline-block;
   transition: 0.3s;
+  text-decoration: none;
 }
 
 .srs .srs-wrap .srs-info a:hover {
@@ -1748,3 +1750,118 @@ section {
   box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
 }
 
+#show-all-btn {
+  background-color: #01ec11;
+  color: white;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 0;
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 0 10px;
+}
+
+#show-all-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(60, 255, 0, 0.96);
+}
+
+#show-all-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 4px 8px rgb(3, 100, 27);
+}
+/*--------------------------------------------------------------
+# word cloud
+--------------------------------------------------------------*/
+.wc_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.input-area {
+    background-color: white;
+    padding: 20px;
+    border-radius: 0px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.input-area h1 {
+    margin-top: 0;
+    color: #1a1a1a;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 0px;
+    font-size: 16px;
+}
+
+.input-group button {
+    padding: 10px 20px;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.input-group button:hover {
+    background-color: #0d62c9;
+}
+
+.result-area {
+    display: flex;
+    gap: 20px;
+}
+
+.wordcloud-container {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 0px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.wordcloud-container h2 {
+    margin-top: 0;
+    color: #1a1a1a;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.wordcloud {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wordcloud img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.wordcloud p {
+    text-align: center;
+    color: #666;
+}
+
+.chart-container {
+    width: 1200px;
+    height: 600px;
+    margin: 0 auto; /* 水平居中 */
+}

@@ -1,0 +1,86 @@
+{% extends "base.html" %} {% block title %}SDP{% endblock %} {% block body_attr %}
+
+{% endblock %}{% block
+welcome %}SDP：Steam数据分析平台 {% endblock %}{% block content %}
+    <div class="wc_container">
+        <div class="input-area">
+            <h2>游戏评论词云分析</h2>
+            <div class="input-group">
+                <input type="text" id="appid" placeholder="输入游戏AppID" required>
+                <button id="analyze-btn">分析</button>
+            </div>
+        </div>
+
+        <div class="result-area">
+            <div class="wordcloud-container">
+                <h3>好评词云</h3>
+                <div id="positive-wordcloud" class="wordcloud"></div>
+            </div>
+            <div class="wordcloud-container">
+                <h3>差评词云</h3>
+                <div id="negative-wordcloud" class="wordcloud"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#analyze-btn').click(function() {
+                const appid = $('#appid').val().trim();
+                if (!appid) {
+                    alert('请输入游戏AppID');
+                    return;
+                }
+
+                // 显示加载中
+                $('#positive-wordcloud').html('<p>分析中...</p>');
+                $('#negative-wordcloud').html('<p>分析中...</p>');
+
+                $.ajax({
+                    url: '/wordcloud_analyse',
+                    method: 'POST',
+                    data: { appid: appid },
+                    success: function(response) {
+                        if (response.error) {
+                            alert(response.error);
+                            return;
+                        }
+
+                        // 显示好评词云
+                        if (response.positive) {
+                            $('#positive-wordcloud').html(
+                                `<img src="data:image/png;base64,${response.positive}" alt="好评词云">`
+                            );
+                        } else {
+                            $('#positive-wordcloud').html('<p>无好评数据</p>');
+                        }
+
+                        // 显示差评词云
+                        if (response.negative) {
+                            $('#negative-wordcloud').html(
+                                `<img src="data:image/png;base64,${response.negative}" alt="差评词云">`
+                            );
+                        } else {
+                            $('#negative-wordcloud').html('<p>无差评数据</p>');
+                        }
+                    },
+                    error: function(xhr) {
+                        try {
+                            const error = JSON.parse(xhr.responseText).error;
+                            alert(error || '分析失败');
+                        } catch {
+                            alert('分析失败');
+                        }
+                    }
+                });
+            });
+
+            // 按回车键触发分析
+            $('#appid').keypress(function(e) {
+                if (e.which === 13) {
+                    $('#analyze-btn').click();
+                }
+            });
+        });
+    </script>
+{% endblock %}
