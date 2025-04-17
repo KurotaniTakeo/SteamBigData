@@ -185,7 +185,9 @@ def preference():
     # 反向映射英文 ➜ 中文（只对 genre 和 category）
     reverse_translations = {
         'genre': {v: k for k, v in translations['genre'].items()},
-        'category': {v: k for k, v in translations['category'].items()}
+        'category': {v: k for k, v in translations['category'].items()},
+        'price': {v: k for k, v in translations['price'].items()},
+        'platform': {v: k for k, v in translations['platform'].items()}
     }
 
     if user_id:
@@ -531,11 +533,9 @@ translations = {
     },
     "price": {
         "免费": "free",
-        "0 - 50 元": "low",
-        "50 - 100 元": "medium",
-        "100 - 150 元": "medium",
-        "150 - 200 元": "high",
-        "200+ 元": "high"
+        "小于 5$": "low",
+        "5 到 15$": "medium",
+        "大于 15$": "high",
     },  # 添加空字典，避免 KeyError
     "platform": {
         "Linux": "platforms_linux",
