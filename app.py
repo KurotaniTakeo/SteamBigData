@@ -14,53 +14,10 @@ import io
 from wordcloud import WordCloud
 import jieba
 import jieba.analyse
-
+from database import Database
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 app.secret_key = config('SECRET_KEY')
-
-
-class Database:
-    _config = None
-
-    @classmethod
-    def _load_config(cls):
-        if cls._config is None:
-            with open("config/db_config.toml", "rb") as f:
-                cls._config = tomlkit.load(f)['database']
-        return cls._config
-
-    @classmethod
-    @contextmanager
-    def connection(cls):
-        """获取数据库连接（自动关闭）"""
-        db_config = cls._load_config()
-        conn = Connection(
-            host=db_config['host'],
-            port=int(db_config['port']),
-            user=db_config['user'],
-            password=db_config['password'],
-            database=db_config['database']
-        )
-        try:
-            yield conn
-        finally:
-            conn.close()
-
-    @classmethod
-    @contextmanager
-    def cursor(cls, dict_cursor=False):
-        """获取数据库游标（自动提交/回滚并关闭）"""
-        with cls.connection() as conn:
-            cursor = conn.cursor(DictCursor if dict_cursor else None)
-            try:
-                yield cursor
-                conn.commit()
-            except Exception:
-                conn.rollback()
-                raise
-            finally:
-                cursor.close()
 
 
 @app.route('/')
@@ -127,6 +84,7 @@ def register():
 
     return render_template("register.html")
 
+
 # 偏好完善度
 def get_preference_completeness(user_id):
     prefer_types = {"price", "genre", "category", "platform"}
@@ -139,6 +97,8 @@ def get_preference_completeness(user_id):
 
     completeness = len(user_pref_types) / len(prefer_types) * 100
     return round(completeness)
+
+
 # 用于资料完善度
 def get_profile_completeness(user_id):
     with Database.cursor() as cursor:
@@ -156,11 +116,13 @@ def get_profile_completeness(user_id):
     completeness = filled / 2 * 100
     return round(completeness)
 
+
 # 用于游戏数统计
 def get_total_game_count():
     with Database.cursor() as cursor:
         cursor.execute("SELECT COUNT(*) FROM games")
         return cursor.fetchone()[0]
+
 
 # 用于注册人数统计
 def get_total_user_count():
@@ -188,6 +150,7 @@ def user():
         game_count=game_count,
         user_count=user_count
     )
+
 
 @app.route('/preference')
 def preference():
@@ -232,9 +195,6 @@ def SDP():
     if not user_id:
         return jsonify({'message': '未登录，无法使用SDP'}), 403
     return render_template("SDP.html", user_name=user_name, user_id=user_id)
-
-
-@app.route('/SRS')
 
 
 def smart_parse_list(text):
@@ -306,7 +266,8 @@ def SRS():
         if page <= 5:
             page_numbers = [1, 2, 3, 4, 5, 6, '...', total_pages]
         elif page >= total_pages - 4:
-            page_numbers = [1, '...', total_pages - 5, total_pages - 4, total_pages - 3, total_pages - 2, total_pages - 1, total_pages]
+            page_numbers = [1, '...', total_pages - 5, total_pages - 4, total_pages - 3, total_pages - 2,
+                            total_pages - 1, total_pages]
         else:
             page_numbers = [1, '...', page - 1, page, page + 1, '...', total_pages]
 
@@ -323,7 +284,10 @@ def SRS():
                            user_id=user_id,
                            reverse_translations=reverse_translations)
 
+
 from recommendations import generate_recommendations
+
+
 # 刷新偏好
 @app.route('/refresh_recommendations', methods=['POST'])
 def refresh_recommendations():
@@ -334,7 +298,7 @@ def refresh_recommendations():
         return jsonify({"status": "error", "message": str(e)})
 
 
-#全部游戏
+# 全部游戏
 @app.route('/show_all_games', methods=['GET'])
 def show_all_games():
     # 统一风格：获取 session 参数部分抽离
@@ -385,7 +349,8 @@ def show_all_games():
         if page <= 5:
             page_numbers = [1, 2, 3, 4, 5, 6, '...', total_pages]
         elif page >= total_pages - 4:
-            page_numbers = [1, '...', total_pages - 5, total_pages - 4, total_pages - 3, total_pages - 2, total_pages - 1, total_pages]
+            page_numbers = [1, '...', total_pages - 5, total_pages - 4, total_pages - 3, total_pages - 2,
+                            total_pages - 1, total_pages]
         else:
             page_numbers = [1, '...', page - 1, page, page + 1, '...', total_pages]
 
@@ -402,6 +367,7 @@ def show_all_games():
                            user_id=user_id,
                            reverse_translations=reverse_translations)
 
+
 @app.route('/price_distribution')
 def price_distribution():
     user_name = session.get('user_name')
@@ -409,6 +375,8 @@ def price_distribution():
     if not user_id:
         return jsonify({'message': '未登录，无法使用SDP'}), 403
     return render_template("steam_price_distribution_line.html", user_name=user_name, user_id=user_id)
+
+
 @app.route('/game_platform')
 def game_platform():
     user_name = session.get('user_name')
@@ -416,6 +384,8 @@ def game_platform():
     if not user_id:
         return jsonify({'message': '未登录，无法使用SDP'}), 403
     return render_template("game_platform_distribution.html", user_name=user_name, user_id=user_id)
+
+
 @app.route('/game_release')
 def game_release():
     user_name = session.get('user_name')
@@ -423,6 +393,8 @@ def game_release():
     if not user_id:
         return jsonify({'message': '未登录，无法使用SDP'}), 403
     return render_template("game_release_trend.html", user_name=user_name, user_id=user_id)
+
+
 @app.route('/recommend_bar')
 def recommend_bar():
     user_name = session.get('user_name')
@@ -430,9 +402,6 @@ def recommend_bar():
     if not user_id:
         return jsonify({'message': '未登录，无法使用SDP'}), 403
     return render_template("recommendation_bar_chart.html", user_name=user_name, user_id=user_id)
-
-
-
 
 
 @app.route('/change')
@@ -597,6 +566,7 @@ def submit_preferences():
         print(f"偏好提交失败: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
+
 def generate_wordcloud(text_weights, color, mask_png_path=None):
     # 读取PNG蒙版
     mask = None
@@ -636,10 +606,10 @@ def generate_wordcloud(text_weights, color, mask_png_path=None):
     img_str = base64.b64encode(img_buffer.getvalue()).decode('utf-8')
     return img_str
 
+
 # 分析评论并生成词云
 def analyze_comments(appid):
-    with Database.cursor()as cursor:  # 使用 with
-
+    with Database.cursor() as cursor:  # 使用 with
 
         # 查询好评评论
         cursor.execute("""
@@ -714,6 +684,8 @@ def analyze_comments(appid):
                 'positive': positive_img,
                 'negative': negative_img
             }
+
+
 @app.route('/wordcloud')
 def wordcloud():
     user_name = session.get('user_name')
@@ -722,6 +694,7 @@ def wordcloud():
         return jsonify({'message': '未登录，无法使用'}), 403
     jieba.initialize()
     return render_template("wordcloud.html", user_name=user_name, user_id=user_id)
+
 
 @app.route('/wordcloud_analyse', methods=['POST'])
 def wordcloud_analyse():

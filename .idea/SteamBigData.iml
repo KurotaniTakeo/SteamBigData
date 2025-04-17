@@ -5,9 +5,9 @@
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/.venv1" />
     </content>
-    <content url="jar://$MODULE_DIR$/../../../spark/spark-3.1.2-bin-hadoop3.2/python/lib/py4j-0.10.9-src.zip!/" />
-    <content url="jar://$MODULE_DIR$/../../../spark/spark-3.1.2-bin-hadoop3.2/python/lib/pyspark.zip!/" />
-    <orderEntry type="jdk" jdkName="38" jdkType="Python SDK" />
+    <content url="file://D:/spark-3.1.2-bin-hadoop3.2/python" />
+    <content url="jar://D:/spark-3.1.2-bin-hadoop3.2/python/lib/py4j-0.10.9-src.zip!/" />
+    <content url="jar://D:/spark-3.1.2-bin-hadoop3.2/python/lib/pyspark.zip!/" />
     <orderEntry type="jdk" jdkName="Python 3.13 (SteamBigData)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
