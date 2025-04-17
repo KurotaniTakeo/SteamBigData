@@ -15,6 +15,8 @@ from wordcloud import WordCloud
 import jieba
 import jieba.analyse
 from database import Database
+from security import hash_password, verify_password  # 加密函数
+
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 app.secret_key = config('SECRET_KEY')
@@ -32,22 +34,31 @@ def login():
         mail = request.form['mail']
         password = request.form['password']
 
+        # 明确指定查询字段顺序
+        query = """
+        SELECT uid, mail, password, user_name 
+        FROM users 
+        WHERE mail = %s
+        """
+
         with Database.cursor() as cursor:
-            cursor.execute(
-                "SELECT * FROM users WHERE mail = %s AND password = %s",
-                (mail, password)
-            )
-            user = cursor.fetchone()
+            cursor.execute(query, (mail,))
+            user = cursor.fetchone()  # user[2] 现在是 password
 
-        if user:
-            session['user_name'] = user[3]
+            # print(f"登录密码: {password}")
+            # print(f"数据库哈希: {user[2]}")
+            # print(f"验证结果: {verify_password(password, user[2])}")
+
+        if user and verify_password(password, user[2]):
             session['user_id'] = user[0]
-            flash('登录成功！', 'success')
+            session['user_name'] = user[3]
+            flash('登录成功', 'success')
             return render_template('login.html', user_name=user[3], user_id=user[0], delay_redirect=True)
-
-        flash('邮箱或密码错误！', 'danger')
+        else:
+            flash('邮箱或密码错误', 'danger')
 
     return render_template('login.html')
+
 
 
 @app.route('/logout')
@@ -59,9 +70,12 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        # 哈希密码
+        hashed_password = hash_password(request.form['password'])
+
         form_data = (
             request.form['mail'],
-            request.form['password'],
+            hashed_password,  # 使用哈希后的密码
             request.form['user_name'],
             request.form['age'],
             request.form['gender'],
@@ -72,6 +86,9 @@ def register():
         (mail, password, user_name, age, gender)
         VALUES (%s, %s, %s, %s, %s)
         """
+        # print(f"注册时收到的密码: {request.form['password']}")
+        # hashed = hash_password(request.form['password'])
+        # print(f"生成的哈希: {hashed}")
 
         try:
             with Database.cursor() as cursor:
@@ -709,4 +726,4 @@ def wordcloud_analyse():
 
 
 if __name__ == '__main__':
-    app.run(port=8000, debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
