@@ -15,6 +15,7 @@ from wordcloud import WordCloud
 import jieba
 import jieba.analyse
 
+
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 app.secret_key = config('SECRET_KEY')
 
@@ -241,7 +242,7 @@ def smart_parse_list(text):
         return ast.literal_eval(text)
     except:
         return [i.strip(" []'\"") for i in re.split(r"[,\n]", text) if i.strip()]
-from flask import request  # 确保你有导入这个
+
 
 @app.route('/SRS', methods=['GET'])
 def SRS():
@@ -402,28 +403,28 @@ def price_distribution():
     user_name = session.get('user_name')
     user_id = session.get('user_id')
     if not user_id:
-        return jsonify({'message': '未登录，无法使用SRS'}), 403
+        return jsonify({'message': '未登录，无法使用SDP'}), 403
     return render_template("steam_price_distribution_line.html", user_name=user_name, user_id=user_id)
 @app.route('/game_platform')
 def game_platform():
     user_name = session.get('user_name')
     user_id = session.get('user_id')
     if not user_id:
-        return jsonify({'message': '未登录，无法使用SRS'}), 403
+        return jsonify({'message': '未登录，无法使用SDP'}), 403
     return render_template("game_platform_distribution.html", user_name=user_name, user_id=user_id)
 @app.route('/game_release')
 def game_release():
     user_name = session.get('user_name')
     user_id = session.get('user_id')
     if not user_id:
-        return jsonify({'message': '未登录，无法使用SRS'}), 403
+        return jsonify({'message': '未登录，无法使用SDP'}), 403
     return render_template("game_release_trend.html", user_name=user_name, user_id=user_id)
 @app.route('/recommend_bar')
 def recommend_bar():
     user_name = session.get('user_name')
     user_id = session.get('user_id')
     if not user_id:
-        return jsonify({'message': '未登录，无法使用SRS'}), 403
+        return jsonify({'message': '未登录，无法使用SDP'}), 403
     return render_template("recommendation_bar_chart.html", user_name=user_name, user_id=user_id)
 
 
