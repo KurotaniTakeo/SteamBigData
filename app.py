@@ -8,6 +8,7 @@ from contextlib import contextmanager
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 app.secret_key = config('SECRET_KEY')
 
+
 class Database:
     _config = None
 
@@ -49,6 +50,7 @@ class Database:
                 raise
             finally:
                 cursor.close()
+
 
 @app.route('/')
 def index():
@@ -166,6 +168,7 @@ def SDP():
         return jsonify({'message': '未登录，无法使用SDP'}), 403
     return render_template("SDP.html", user_name=user_name, user_id=user_id)
 
+
 @app.route('/SRS')
 def SRS():
     user_name = session.get('user_name')
@@ -174,6 +177,7 @@ def SRS():
         return jsonify({'message': '未登录，无法使用SRS'}), 403
     return render_template("SRS.html", user_name=user_name, user_id=user_id)
 
+
 @app.route('/change')
 def change():
     user_name = session.get('user_name')
@@ -181,6 +185,7 @@ def change():
     if not user_id:
         return jsonify({'message': '未登录，无法使用修改用户信息'}), 403
     return render_template("change.html", user_name=user_name, user_id=user_id)
+
 
 @app.route('/update-user-info', methods=['POST'])
 def update_user_info():
@@ -216,11 +221,6 @@ def update_user_info():
         flash('修改失败，请稍后再试。', 'danger')
 
     return redirect(url_for('user'))
-
-
-
-
-
 
 
 translations = {
