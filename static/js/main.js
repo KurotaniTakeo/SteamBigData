@@ -367,6 +367,22 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('refresh-btn').addEventListener('click', function() {
+        fetch('/refresh_recommendations', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            if (data.status === 'success') {
+                location.reload();
+            }
+        })
+        .catch(error => {
+            alert("请求失败：" + error);
+        });
+    });
+});
 
 

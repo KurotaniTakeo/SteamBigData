@@ -5,4 +5,142 @@ welcome %}SDP：Steam数据分析平台 {% endblock %}{% block content %}
 
 
 
+
+
+
+
+  <!-- ======= Our srs Section ======= -->
+  <section id="srs" class="srs section-bg">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="row">
+        <div class="col-lg-12">
+          <ul id="srs-flters">
+            <li data-filter="*" class="filter-active">全部</li>
+            <li data-filter=".filter-app">分布图</li>
+            <li data-filter=".filter-card">趋势图</li>
+            <li data-filter=".filter-web">词云分析</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row srs-container">
+        <div class="col-lg-4 col-md-6 srs-item filter-app">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-1.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>价格分布图</h4>
+              <p>steam游戏在价格区间内的数量分布</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-1.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="分布图 1 查看大图"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="/price_distribution" title="查看详情"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 srs-item filter-app">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-2.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>平台分布图</h4>
+              <p>steam游戏支持平台分布</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-2.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="分布图 2 查看大图"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="/game_platform" title="查看详情"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 srs-item filter-card">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-3.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>发布趋势图</h4>
+              <p>近年来STEAM发布游戏时间趋势</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-3.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="趋势图 1 查看大图"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="/game_release" title="查看详情"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 srs-item filter-app">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-4.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>分布图 3</h4>
+              <p>热度分布图</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-4.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="分布图 3 查看大图"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="/recommend_bar" title="查看详情"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 srs-item filter-web">
+          <div class="srs-wrap">
+            <img src="static/image/srs/srs-5.jpg" class="img-fluid" alt="" />
+            <div class="srs-info">
+              <h4>词云分析</h4>
+              <p>进行词云分析</p>
+              <div class="srs-links">
+                <a
+                  href="static/image/srs/srs-5.jpg"
+                  data-gall="srsGallery"
+                  class="venobox"
+                  title="词云分析 查看大图"
+                  ><i class="icofont-eye"></i
+                ></a>
+                <a href="/wordcloud" title="查看详情"
+                  ><i class="icofont-external-link"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+  <!-- End Our srs Section -->
+
+
+
 {% endblock %}

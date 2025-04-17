@@ -14,6 +14,7 @@
   <meta property="og:description" content="一个用于分析 Steam 游戏数据并提供个性化推荐的系统。" />
   <meta property="og:image" content="static/image/sdrs_logo.png" />
   <meta property="og:type" content="website" />
+  <script type="text/javascript" src="https://assets.pyecharts.org/assets/v5/echarts.min.js"></script>
 
   <!-- Favicons 网站图标 -->
   <link rel="icon" href="static/image/sdrs_logo.png" />
@@ -28,7 +29,8 @@
     <link href="static/vendor/animate.css/animate.min.css" rel="stylesheet" />
     <link href="static/vendor/venobox/venobox.css" rel="stylesheet" />
     <link href="static/vendor/aos/aos.css" rel="stylesheet" />
-
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <!-- Template Main CSS File 主样式文件 -->
   <link rel="stylesheet" href="static/css/style.css" />
 </head>
@@ -58,7 +60,7 @@
       <div class="container">
         <div class="logo float-left">
           <h1 class="text-light">
-            <a href="index">{% block welcome %}{% endblock %}</a>
+            <a href="">{% block welcome %}{% endblock %}</a>
           </h1>
 
         </div>
@@ -80,9 +82,10 @@
               <a href="">关于</a>
               <ul>
                 <li><a href="/#about">关于我们</a></li>
+                  <li><a href="/#team">团队</a></li>
                 <li><a href="/#sdp">关于SDP</a></li>
                 <li><a href="/#srs">关于SRS</a></li>
-                <li><a href="/#team">团队</a></li>
+
               </ul>
             </li>
             <li class="drop-down">

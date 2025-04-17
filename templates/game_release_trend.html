@@ -1,0 +1,326 @@
+{% extends "base.html" %} {% block title %}SDP{% endblock %} {% block body_attr %}
+
+{% endblock %}{% block
+welcome %}SDP：Steam数据分析平台 {% endblock %}{% block content %}
+    <div id="e31dfeb70f974ccf9ebe5b79d9d3478c" class="chart-container" ></div>
+    <script>
+        var chart_e31dfeb70f974ccf9ebe5b79d9d3478c = echarts.init(
+            document.getElementById('e31dfeb70f974ccf9ebe5b79d9d3478c'), 'white', {renderer: 'canvas'});
+        var option_e31dfeb70f974ccf9ebe5b79d9d3478c = {
+    "animation": true,
+    "animationThreshold": 2000,
+    "animationDuration": 1000,
+    "animationEasing": "cubicOut",
+    "animationDelay": 0,
+    "animationDurationUpdate": 300,
+    "animationEasingUpdate": "cubicOut",
+    "animationDelayUpdate": 0,
+    "aria": {
+        "enabled": false
+    },
+    "color": [
+        "#5470c6",
+        "#91cc75",
+        "#fac858",
+        "#ee6666",
+        "#73c0de",
+        "#3ba272",
+        "#fc8452",
+        "#9a60b4",
+        "#ea7ccc"
+    ],
+    "series": [
+        {
+            "type": "line",
+            "name": "\u6e38\u620f\u6570\u91cf",
+            "connectNulls": false,
+            "xAxisIndex": 0,
+            "symbol": "circle",
+            "symbolSize": 8,
+            "showSymbol": true,
+            "smooth": true,
+            "clip": true,
+            "step": false,
+            "stackStrategy": "samesign",
+            "data": [
+                [
+                    "2005",
+                    1
+                ],
+                [
+                    "2006",
+                    4
+                ],
+                [
+                    "2007",
+                    7
+                ],
+                [
+                    "2008",
+                    8
+                ],
+                [
+                    "2009",
+                    23
+                ],
+                [
+                    "2010",
+                    19
+                ],
+                [
+                    "2011",
+                    10
+                ],
+                [
+                    "2012",
+                    20
+                ],
+                [
+                    "2013",
+                    25
+                ],
+                [
+                    "2014",
+                    46
+                ],
+                [
+                    "2015",
+                    159
+                ],
+                [
+                    "2016",
+                    195
+                ],
+                [
+                    "2017",
+                    160
+                ],
+                [
+                    "2018",
+                    139
+                ],
+                [
+                    "2019",
+                    236
+                ],
+                [
+                    "2020",
+                    433
+                ],
+                [
+                    "2021",
+                    465
+                ],
+                [
+                    "2022",
+                    409
+                ],
+                [
+                    "2023",
+                    724
+                ],
+                [
+                    "2024",
+                    787
+                ],
+                [
+                    "2025",
+                    358
+                ]
+            ],
+            "hoverAnimation": true,
+            "label": {
+                "show": false,
+                "margin": 8,
+                "valueAnimation": false
+            },
+            "logBase": 10,
+            "seriesLayoutBy": "column",
+            "lineStyle": {
+                "show": true,
+                "width": 3,
+                "opacity": 1,
+                "curveness": 0,
+                "type": "solid"
+            },
+            "areaStyle": {
+                "opacity": 0.2
+            },
+            "zlevel": 0,
+            "z": 0
+        }
+    ],
+    "legend": [
+        {
+            "data": [
+                "\u6e38\u620f\u6570\u91cf"
+            ],
+            "selected": {},
+            "show": true,
+            "padding": 5,
+            "itemGap": 10,
+            "itemWidth": 25,
+            "itemHeight": 14,
+            "backgroundColor": "transparent",
+            "borderColor": "#ccc",
+            "borderRadius": 0,
+            "pageButtonItemGap": 5,
+            "pageButtonPosition": "end",
+            "pageFormatter": "{current}/{total}",
+            "pageIconColor": "#2f4554",
+            "pageIconInactiveColor": "#aaa",
+            "pageIconSize": 15,
+            "animationDurationUpdate": 800,
+            "selector": false,
+            "selectorPosition": "auto",
+            "selectorItemGap": 7,
+            "selectorButtonGap": 10
+        }
+    ],
+    "tooltip": {
+        "show": true,
+        "trigger": "axis",
+        "triggerOn": "mousemove|click",
+        "axisPointer": {
+            "type": "line"
+        },
+        "showContent": true,
+        "alwaysShowContent": false,
+        "showDelay": 0,
+        "hideDelay": 100,
+        "enterable": false,
+        "confine": false,
+        "appendToBody": false,
+        "transitionDuration": 0.4,
+        "formatter": "{b}\u5e74: {c}\u6b3e\u6e38\u620f",
+        "textStyle": {
+            "fontSize": 14
+        },
+        "borderWidth": 0,
+        "padding": 5,
+        "order": "seriesAsc"
+    },
+    "xAxis": [
+        {
+            "name": "\u5e74\u4efd",
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "gridIndex": 0,
+            "axisLabel": {
+                "show": true,
+                "rotate": 45,
+                "margin": 8,
+                "valueAnimation": false
+            },
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "minInterval": 0,
+            "splitLine": {
+                "show": true,
+                "lineStyle": {
+                    "show": true,
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            },
+            "animation": true,
+            "animationThreshold": 2000,
+            "animationDuration": 1000,
+            "animationEasing": "cubicOut",
+            "animationDelay": 0,
+            "animationDurationUpdate": 300,
+            "animationEasingUpdate": "cubicOut",
+            "animationDelayUpdate": 0,
+            "data": [
+                "2005",
+                "2006",
+                "2007",
+                "2008",
+                "2009",
+                "2010",
+                "2011",
+                "2012",
+                "2013",
+                "2014",
+                "2015",
+                "2016",
+                "2017",
+                "2018",
+                "2019",
+                "2020",
+                "2021",
+                "2022",
+                "2023",
+                "2024",
+                "2025"
+            ]
+        }
+    ],
+    "yAxis": [
+        {
+            "name": "\u53d1\u5e03\u6570\u91cf",
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "gridIndex": 0,
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "minInterval": 0,
+            "splitLine": {
+                "show": true,
+                "lineStyle": {
+                    "show": true,
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            },
+            "animation": true,
+            "animationThreshold": 2000,
+            "animationDuration": 1000,
+            "animationEasing": "cubicOut",
+            "animationDelay": 0,
+            "animationDurationUpdate": 300,
+            "animationEasingUpdate": "cubicOut",
+            "animationDelayUpdate": 0
+        }
+    ],
+    "title": [
+        {
+            "show": true,
+            "text": "Steam\u6e38\u620f\u5e74\u5ea6\u53d1\u5e03\u8d8b\u52bf",
+            "target": "blank",
+            "subtarget": "blank",
+            "padding": 5,
+            "itemGap": 10,
+            "textAlign": "auto",
+            "textVerticalAlign": "auto",
+            "triggerEvent": false
+        }
+    ],
+    "dataZoom": [
+        {
+            "show": true,
+            "type": "slider",
+            "showDetail": true,
+            "showDataShadow": true,
+            "realtime": true,
+            "start": 20,
+            "end": 80,
+            "orient": "horizontal",
+            "zoomLock": false,
+            "filterMode": "filter"
+        }
+    ]
+};
+        chart_e31dfeb70f974ccf9ebe5b79d9d3478c.setOption(option_e31dfeb70f974ccf9ebe5b79d9d3478c);
+    </script>
+{% endblock %}
