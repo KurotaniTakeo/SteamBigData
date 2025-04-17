@@ -16,7 +16,9 @@ SRS：Steam游戏推荐系统
 <div class="game-container">
 
     {% for game in games %}
+<a href="https://store.steampowered.com/app/{{ game[0] }}" target="_blank" class="game-card-link">
     <div class="game-card">
+
         {% if game[16] %}
             <img src="{{ game[16] }}"
                  alt="{{ game[1] }}"
@@ -31,7 +33,14 @@ SRS：Steam游戏推荐系统
             <div class="game-title">{{ game[1] }}</div>
         <div class="game-details">
 
-            <div class="game-info">价格: {{ game[2] }}</div>
+            <div class="game-info">
+              价格:
+              {% if game[2] == 0.0 %}
+                Free
+              {% else %}
+                {{ game[2] }}$
+              {% endif %}
+            </div>
             <div class="game-info">评论数: {{ game[3] }}</div>
             <div class="game-info">评分: {{ game[4] }}</div>
             <div class="game-info">支持手柄: {{ game[5] }}</div>
@@ -46,17 +55,23 @@ SRS：Steam游戏推荐系统
                 {% if game[10] %}<span class="game-tag">Linux</span>{% endif %}
             </div>
 
-            <div class="game-info">
-                <strong>类型:</strong>
-                {% for cat in game[14] %}<span class="game-tag-1">{{ cat }}</span>{% endfor %}
-            </div>
+<div class="game-info">
+    <strong>类型:</strong>
+    {% for cat in game[14] %}
+        <span class="game-tag-1">{{ reverse_translations['category'].get(cat, cat) }}</span>
+    {% endfor %}
+</div>
 
-            <div class="game-info">
-                <strong>分类:</strong>
-                {% for genre in game[15] %}<span class="game-tag-2">{{ genre }}</span>{% endfor %}
-            </div>
+<div class="game-info">
+    <strong>分类:</strong>
+    {% for genre in game[15] %}
+        <span class="game-tag-2">{{ reverse_translations['genre'].get(genre, genre) }}</span>
+    {% endfor %}
+</div>
+
         </div>
     </div>
+    </a>
     {% endfor %}
 </div>
 

@@ -1609,6 +1609,11 @@ section {
     z-index: 2; /* 确保悬浮卡片在其他卡片上方 */
 }
 
+.game-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
 /* 游戏海报样式 */
 .game-poster {
     width: 100%;

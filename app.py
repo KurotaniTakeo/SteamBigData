@@ -305,13 +305,18 @@ def SRS():
         else:
             page_numbers = [1, '...', page - 1, page, page + 1, '...', total_pages]
 
+    reverse_translations = {
+        "category": {v: k for k, v in translations["category"].items()},
+        "genre": {v: k for k, v in translations["genre"].items()},
+    }
     return render_template("SRS.html",
                            games=datalist,
                            page=page,
                            total_pages=total_pages,
                            page_numbers=page_numbers,
                            user_name=user_name,
-                           user_id=user_id)
+                           user_id=user_id,
+                           reverse_translations=reverse_translations)
 
 from recommendations import generate_recommendations
 # 刷新偏好
@@ -379,13 +384,18 @@ def show_all_games():
         else:
             page_numbers = [1, '...', page - 1, page, page + 1, '...', total_pages]
 
+    reverse_translations = {
+        "category": {v: k for k, v in translations["category"].items()},
+        "genre": {v: k for k, v in translations["genre"].items()},
+    }
     return render_template("show_all_games.html",
                            games=datalist,
                            page=page,
                            total_pages=total_pages,
                            page_numbers=page_numbers,
                            user_name=user_name,
-                           user_id=user_id)
+                           user_id=user_id,
+                           reverse_translations=reverse_translations)
 
 @app.route('/price_distribution')
 def price_distribution():
@@ -707,7 +717,7 @@ def wordcloud():
     user_name = session.get('user_name')
     user_id = session.get('user_id')
     if not user_id:
-        return jsonify({'message': '未登录，无法使用SRS'}), 403
+        return jsonify({'message': '未登录，无法使用'}), 403
     jieba.initialize()
     return render_template("wordcloud.html", user_name=user_name, user_id=user_id)
 
