@@ -103,33 +103,32 @@ welcome %}用户登录{% endblock %}{% block content %}
                 </div>
 
 
-                <!-- 年龄 -->
-                <div class="form-row justify-content-center">
-                  <div class="col-lg-7 form-group">
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="age"
-                      id="age"
-                      placeholder="请输入你的年龄"
-                    />
-                    <div class="validate"></div>
-                  </div>
-                </div>
+<!-- 年龄（选择） -->
+<div class="form-row justify-content-center">
+  <div class="col-lg-7 form-group">
+    <select class="form-control" name="age" id="age" required>
+      {% for i in range(0, 101) %}
+      <option value="{{ i }}">{{ i }}</option>
+      {% endfor %}
+    </select>
+    <div class="validate"></div>
+  </div>
+</div>
 
-                <!-- 性别 -->
-                <div class="form-row justify-content-center">
-                  <div class="col-lg-7 form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="gender"
-                      id="gender"
-                      placeholder="请输入你的性别"
-                    />
-                    <div class="validate"></div>
-                  </div>
-                </div>
+
+<!-- 性别（选择） -->
+<div class="form-row justify-content-center">
+  <div class="col-lg-7 form-group">
+    <select class="form-control" name="gender" id="gender" required>
+      <option value="">请选择性别</option>
+      <option value="男">男</option>
+      <option value="女">女</option>
+      <option value="其他">其他</option>
+    </select>
+    <div class="validate"></div>
+  </div>
+</div>
+
 
 
                 <div class="mb-3">

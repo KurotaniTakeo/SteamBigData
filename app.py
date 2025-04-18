@@ -16,6 +16,8 @@ from decouple import config
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from wordcloud import WordCloud
 from database import Database
+from security import hash_password, verify_password  # 加密函数
+
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 app.secret_key = config('SECRET_KEY')
@@ -33,22 +35,31 @@ def login():
         mail = request.form['mail']
         password = request.form['password']
 
+        # 明确指定查询字段顺序
+        query = """
+        SELECT uid, mail, password, user_name 
+        FROM users 
+        WHERE mail = %s
+        """
+
         with Database.cursor() as cursor:
-            cursor.execute(
-                "SELECT * FROM users WHERE mail = %s AND password = %s",
-                (mail, password)
-            )
-            user = cursor.fetchone()
+            cursor.execute(query, (mail,))
+            user = cursor.fetchone()  # user[2] 现在是 password
 
-        if user:
-            session['user_name'] = user[3]
+            # print(f"登录密码: {password}")
+            # print(f"数据库哈希: {user[2]}")
+            # print(f"验证结果: {verify_password(password, user[2])}")
+
+        if user and verify_password(password, user[2]):
             session['user_id'] = user[0]
-            flash('登录成功！', 'success')
+            session['user_name'] = user[3]
+            flash('登录成功', 'success')
             return render_template('login.html', user_name=user[3], user_id=user[0], delay_redirect=True)
-
-        flash('邮箱或密码错误！', 'danger')
+        else:
+            flash('邮箱或密码错误', 'danger')
 
     return render_template('login.html')
+
 
 
 @app.route('/logout')
@@ -60,9 +71,12 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        # 哈希密码
+        hashed_password = hash_password(request.form['password'])
+
         form_data = (
             request.form['mail'],
-            request.form['password'],
+            hashed_password,  # 使用哈希后的密码
             request.form['user_name'],
             request.form['age'],
             request.form['gender'],
@@ -169,7 +183,9 @@ def preference():
     # 反向映射英文 ➜ 中文（只对 genre 和 category）
     reverse_translations = {
         'genre': {v: k for k, v in translations['genre'].items()},
-        'category': {v: k for k, v in translations['category'].items()}
+        'category': {v: k for k, v in translations['category'].items()},
+        'price': {v: k for k, v in translations['price'].items()},
+        'platform': {v: k for k, v in translations['platform'].items()}
     }
 
     if user_id:
@@ -515,11 +531,9 @@ translations = {
     },
     "price": {
         "免费": "free",
-        "0 - 50 元": "low",
-        "50 - 100 元": "medium",
-        "100 - 150 元": "medium",
-        "150 - 200 元": "high",
-        "200+ 元": "high"
+        "小于 5$": "low",
+        "5 到 15$": "medium",
+        "大于 15$": "high",
     },  # 添加空字典，避免 KeyError
     "platform": {
         "Linux": "platforms_linux",
