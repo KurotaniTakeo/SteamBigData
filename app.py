@@ -42,9 +42,6 @@ def login():
             cursor.execute(query, (mail,))
             user = cursor.fetchone()  # user[2] 现在是 password
 
-            # print(f"登录密码: {password}")
-            # print(f"数据库哈希: {user[2]}")
-            # print(f"验证结果: {verify_password(password, user[2])}")
 
         if user and verify_password(password, user[2]):
             session['user_id'] = user[0]
@@ -71,7 +68,7 @@ def register():
 
         form_data = (
             request.form['mail'],
-            request.form['password'],
+            hashed_password, #加密
             request.form['user_name'],
             request.form['age'],
             request.form['gender'],
@@ -440,25 +437,26 @@ def update_user_info():
 
     try:
         with Database.cursor() as cursor:
-            # 可根据 password 是否为空来判断是否更新
-            if password:
+            if password:  # 如果填写了新密码
+                hashed_password = hash_password(password)
                 cursor.execute(
                     "UPDATE users SET mail=%s, password=%s, user_name=%s, age=%s, gender=%s WHERE uid=%s",
-                    (mail, password, user_name, age, gender, user_id)
+                    (mail, hashed_password, user_name, age, gender, user_id)
                 )
             else:
                 cursor.execute(
                     "UPDATE users SET mail=%s, user_name=%s, age=%s, gender=%s WHERE uid=%s",
                     (mail, user_name, age, gender, user_id)
                 )
+
         flash('资料修改成功！', 'success')
-        # 更新 session 中的 user_name
         session['user_name'] = user_name
     except Exception as e:
         print("资料更新出错:", e)
         flash('修改失败，请稍后再试。', 'danger')
 
     return redirect(url_for('user'))
+
 
 
 translations = {
