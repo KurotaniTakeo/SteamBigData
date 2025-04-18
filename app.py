@@ -1,8 +1,5 @@
-"""
-
-"""
-
 import ast
+
 import base64
 import io
 import re
@@ -17,7 +14,6 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from wordcloud import WordCloud
 from database import Database
 from security import hash_password, verify_password  # 加密函数
-
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 app.secret_key = config('SECRET_KEY')
@@ -37,10 +33,10 @@ def login():
 
         # 明确指定查询字段顺序
         query = """
-        SELECT uid, mail, password, user_name 
-        FROM users 
-        WHERE mail = %s
-        """
+                SELECT uid, mail, password, user_name
+                FROM users
+                WHERE mail = %s \
+                """
 
         with Database.cursor() as cursor:
             cursor.execute(query, (mail,))
@@ -61,7 +57,6 @@ def login():
     return render_template('login.html')
 
 
-
 @app.route('/logout')
 def logout():
     session.pop('user_name', None)
@@ -76,7 +71,7 @@ def register():
 
         form_data = (
             request.form['mail'],
-            hashed_password,  # 使用哈希后的密码
+            request.form['password'],
             request.form['user_name'],
             request.form['age'],
             request.form['gender'],
