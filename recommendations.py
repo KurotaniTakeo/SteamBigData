@@ -1,16 +1,16 @@
 # 导入部分
-from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, when, regexp_replace, split, array_contains, lit, rand
-from database import Database  # 从app.py导入Database类
 from functools import reduce
-import random
+
+from database import Database  # 从app.py导入Database类
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, when, regexp_replace, split, array_contains, lit
 from pyspark.sql.functions import rand
 
 # 创建spraksession数据处理入口
 spark = SparkSession.builder.appName("SteamUserSimilarityRecommendation").getOrCreate()
 
 # 加载游戏数据
-df_raw = spark.read.option("header", "true").csv("steam_games.csv")
+df_raw = spark.read.option("header", "true").csv("./dataset/steam_games_data.csv")
 # 游戏价格处理 free->0 去掉美元符号
 df = df_raw.withColumn("price_num",
                        when(col("price") == "Free", 0.0).otherwise(regexp_replace("price", "\\$", "").cast("double")))

@@ -1,19 +1,20 @@
-from pathlib import Path
-import numpy as np
-from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
-from decouple import config
-from pymysql import Connection
-from pymysql.cursors import DictCursor
-import tomlkit
-from PIL import Image
-from contextlib import contextmanager
+"""
+
+"""
+
 import ast
-import re
 import base64
 import io
-from wordcloud import WordCloud
+import re
 import jieba
 import jieba.analyse
+import numpy as np
+
+from pathlib import Path
+from PIL import Image
+from decouple import config
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
+from wordcloud import WordCloud
 from database import Database
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
@@ -68,10 +69,10 @@ def register():
         )
 
         query = """
-        INSERT INTO users 
-        (mail, password, user_name, age, gender)
-        VALUES (%s, %s, %s, %s, %s)
-        """
+                INSERT INTO users
+                    (mail, password, user_name, age, gender)
+                VALUES (%s, %s, %s, %s, %s) \
+                """
 
         try:
             with Database.cursor() as cursor:
@@ -552,9 +553,9 @@ def submit_preferences():
 
             for preference in english_preferences:
                 query = """
-                    INSERT INTO preferences (user_id, prefer, value)
-                    VALUES (%s, %s, %s)
-                """
+                        INSERT INTO preferences (user_id, prefer, value)
+                        VALUES (%s, %s, %s) \
+                        """
                 form_data = (user_id, preference_type, preference)
 
                 with Database.cursor() as cursor:
@@ -613,16 +614,20 @@ def analyze_comments(appid):
 
         # 查询好评评论
         cursor.execute("""
-            SELECT comments, duration FROM recommendation 
-            WHERE appid = %s AND positive = TRUE
-        """, (appid,))
+                       SELECT comments, duration
+                       FROM recommendation
+                       WHERE appid = %s
+                         AND positive = TRUE
+                       """, (appid,))
         positive_comments = cursor.fetchall()
 
         # 查询差评评论
         cursor.execute("""
-            SELECT comments, duration FROM recommendation 
-            WHERE appid = %s AND positive = FALSE
-        """, (appid,))
+                       SELECT comments, duration
+                       FROM recommendation
+                       WHERE appid = %s
+                         AND positive = FALSE
+                       """, (appid,))
         negative_comments = cursor.fetchall()
 
         cursor.close()

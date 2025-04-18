@@ -1,7 +1,6 @@
-# database.py 内容
-from pathlib import Path
-import tomlkit
 from contextlib import contextmanager
+
+import tomlkit
 from pymysql import Connection
 from pymysql.cursors import DictCursor
 
