@@ -1,19 +1,17 @@
-import random
-import time
 import json
 import os
+import random
+import re
+import socket
+import threading
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import List, Dict, Optional
+
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-import re
 from tqdm import tqdm
-import pandas as pd
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import threading
-from typing import List, Dict, Optional
-import socket
-from urllib3.exceptions import ConnectTimeoutError
-from decouple import config
-from steam.webapi import WebAPI
 
 
 #######################################
